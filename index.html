@@ -4,16 +4,122 @@
     <meta charset="utf-8">
     <meta name="description" content="Analizador de seguridad de contraseñas">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- CSS -->
     <link rel="stylesheet" href="css/app.css">
+    <link rel="shortcut icon" type="image/png" href="css/images/favicon.png">
 
     <title>pw-lizer</title>
   </head>
   <body>
-    <h1 class="tituloPagina">pw-lizer</h1>
+    <div class="titleContainer">
+      <h1 class="tituloPagina">pw-lizer</h1>
+    </div>
 
+    <div id="mainContainer" class="texto">
+      <form id="formPwd" name="formPwd">
+
+        <div id="bloquePassword">
+
+          <div class="titleForm">
+            <h2>
+              Input
+            </h2>
+          </div>
+
+          <div id="containerInput">
+            <div class="container inline">
+              <div>
+                <label>Password</label>
+              </div>
+              <div>
+                <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
+              </div>
+            </div>  
+  
+            <div class="container inline">
+              <div>
+                <label>Show/Hide</label>
+              </div>
+              <div class="center">
+                <input type="checkbox" name="visibleCheck" value='' id="visibleCheck" onchange="togglePwd(this.checked)" />
+                <label for="visibleCheck"></label>
+              </div>
+              
+            </div>
+
+            <div class="container inline">
+              <div>
+                <label>Nivel</label>
+              </div>
+              <div class="center" >
+                aca el medidor
+              </div>
+            </div>
+
+            <div class="container inline">
+              <div>
+                <label>Tiempo Bruteforce</label>
+              </div>
+              <div class="center mellt-bad" id="dyToCrack">
+                0 días
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div id="bloqueInfo">
+          
+          <div class="titleForm">
+            <h2>
+              Información
+            </h2>
+          </div>
+
+          <div class="subtitleForm">
+            <h3>
+              Requerimientos mínimos
+            </h3>
+          </div>
+
+          <div class="basicContent">
+            <ul>
+              <li>
+                Contiene al menos 8 caracteres
+              </li>
+              <li>
+                Contiene al menos 3 de de 4 de los siguientes ítems:
+                <br>
+                -Letras minúsculas
+                <br>
+                -Letras mayúsculas
+                <br>
+                -Símbolos
+                <br>
+                -Números
+              </li>
+            </ul>
+          </div>
+
+          <div class="subtitleForm">
+            <h3>
+              Leyenda
+            </h3>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+
+    <div id="footer" class="texto">
+
+    </div>
     <!-- JavaScript -->
-    <script src="js/app.js"></script>
+    <script src="js/Mellt/Mellt.js" ></script>
+    <script src="js/Mellt/common-passwords.js"></script>
+    <script src="js/app.js" ></script>
   </body>
 </html>
