@@ -8,7 +8,8 @@ Se intentará implementar una utilidad que brinde métricas de seguridad sobre u
 
 ## **Créditos**
 
-Idea básica: http://www.passwordmeter.com/
+Idea básica: http://www.passwordmeter.com/ .
+
 Testeo de brute force: https://github.com/ravisorg/Mellt/tree/master/javascript
 
 
