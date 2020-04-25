@@ -19,59 +19,184 @@
     <div id="mainContainer" class="texto">
       <form id="formPwd" name="formPwd">
 
-        <div id="bloquePassword">
+        <div id="containerLeft">
 
-          <div class="titleForm">
-            <h2>
-              Input
-            </h2>
+          <!-- Input -->
+          <div id="bloquePassword">
+
+            <div class="titleForm">
+              <h2>
+                Input
+              </h2>
+            </div>
+  
+            <div id="containerInput">
+              <div class="container inline">
+                <div>
+                  <label>Password</label>
+                </div>
+                <div>
+                  <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
+                </div>
+              </div>  
+    
+              <div class="container inline">
+                <div>
+                  <label>Show/Hide</label>
+                </div>
+                <div class="center">
+                  <input type="checkbox" name="visibleCheck" value='' id="visibleCheck" onchange="togglePwd(this.checked)" />
+                  <label for="visibleCheck"></label>
+                </div>
+                
+              </div>
+  
+              <div class="container inline">
+                <div>
+                  <label>Nivel</label>
+                </div>
+                <div class="center" >
+                  aca el medidor
+                </div>
+              </div>
+  
+              <div class="container inline">
+                <div>
+                  <label>Tiempo Bruteforce</label>
+                </div>
+                <div class="center mellt-bad" id="dyToCrack">
+                  0 días
+                </div>
+              </div>
+  
+            </div>
+  
           </div>
 
-          <div id="containerInput">
-            <div class="container inline">
-              <div>
-                <label>Password</label>
-              </div>
-              <div>
-                <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
-              </div>
-            </div>  
-  
-            <div class="container inline">
-              <div>
-                <label>Show/Hide</label>
-              </div>
-              <div class="center">
-                <input type="checkbox" name="visibleCheck" value='' id="visibleCheck" onchange="togglePwd(this.checked)" />
-                <label for="visibleCheck"></label>
-              </div>
+          <!-- Grillas -->
+          <div id="bloqueMetricas">
+            <div class="titleForm">
+              <h2>
+                Métricas
+              </h2>
+            </div>
+
+            <div class="grid-container">
+
+              <!-- adiciones -->
+              <div id="additions" class="grid-separator grid-title">Adición</div>
+              <div class="grid-separator grid-title">Ratio</div>
+              <div class="grid-separator grid-title">Cantidad</div>
+              <div class="grid-separator">Bonus</div>
               
-            </div>
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Número de caracteres</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
 
-            <div class="container inline">
-              <div>
-                <label>Nivel</label>
-              </div>
-              <div class="center" >
-                aca el medidor
-              </div>
-            </div>
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Letras mayúsculas</div>
+              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
 
-            <div class="container inline">
-              <div>
-                <label>Tiempo Bruteforce</label>
-              </div>
-              <div class="center mellt-bad" id="dyToCrack">
-                0 días
-              </div>
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Letras minúsculas</div>
+              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">números</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Símbolos</div>
+              <div class="grid-mid-mid">+(n*6)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Números entre caracteres</div>
+              <div class="grid-mid-mid">+(n*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-bottom-left-corner">img2</div>
+              <div class="descripcionMetrica grid-bottom-mid">Requerimientos</div>
+              <div class="grid-bottom-mid">+(n*2)</div>
+              <div class="grid-bottom-mid">0</div>
+              <div class="">0</div>
+
+              <!-- deducciones -->
+              <div id="deductions" class="grid-separator grid-title">Deducciones</div>
+              
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Solo letras</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Solo números</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Caracteres repetidos</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Letras mayúsculas consecutivas</div>
+              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Letras minúsculas consecutivas</div>
+              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Números consecutivos</div>
+              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Letras en secuencia (3+)</div>
+              <div class="grid-mid-mid">+(n*6)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-left-side">img1</div>
+              <div class="descripcionMetrica grid-mid-mid">Números en secuencia (3+)</div>
+              <div class="grid-mid-mid">+(n*2)</div>
+              <div class="grid-mid-mid">0</div>
+              <div class="grid-right">0</div>
+
+              <div class="grid-bottom-left-corner">img2</div>
+              <div class="descripcionMetrica grid-bottom-mid">Símbolos en secuencia (3+)</div>
+              <div class="grid-bottom-mid">+(n*2)</div>
+              <div class="grid-bottom-mid">0</div>
+              <div class="">0</div>
+
             </div>
 
           </div>
 
         </div>
 
+        <!-- Info -->
         <div id="bloqueInfo">
-          
+            
           <div class="titleForm">
             <h2>
               Información
