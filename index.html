@@ -22,7 +22,7 @@
         <div id="containerLeft">
 
           <!-- Input -->
-          <div id="bloquePassword">
+          <div id="bloquePassword" class="sticky">
 
             <div class="titleForm">
               <h2>
@@ -30,7 +30,7 @@
               </h2>
             </div>
   
-            <div id="containerInput">
+            <div id="containerInput" title="Este campo corresponde a la contraseña a ser analizada. Ver sección Requerimientos mínimos.">
               <div class="container inline">
                 <div>
                   <label>Password</label>
@@ -40,7 +40,7 @@
                 </div>
               </div>  
     
-              <div class="container inline">
+              <div class="container inline" title="mostrar/esconder contraseña.">
                 <div>
                   <label>Show/Hide</label>
                 </div>
@@ -51,16 +51,16 @@
                 
               </div>
   
-              <div class="container inline">
+              <div class="container inline" title="porcentaje de cumplimiento de requerimientos.">
                 <div>
                   <label>Nivel</label>
                 </div>
                 <div class="center" >
-                  aca el medidor
+                  <meter min="0" max="100" none="0" low="25" high="75" optimum="100" value="0"></meter>
                 </div>
               </div>
   
-              <div class="container inline">
+              <div class="container inline" title="Tiempo que toma encontrar esta contraseña utilizando la estrategia de fuerza bruta, es decir, probar una por una todas las combinaciones posibles.">
                 <div>
                   <label>Tiempo Bruteforce</label>
                 </div>
@@ -83,110 +83,119 @@
 
             <div class="grid-container">
 
-              <!-- adiciones -->
+              <!-- ***** adiciones ***** -->
               <div id="additions" class="grid-separator grid-title">Adición</div>
               <div class="grid-separator grid-title">Ratio</div>
               <div class="grid-separator grid-title">Cantidad</div>
               <div class="grid-separator">Bonus</div>
               
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Número de caracteres</div>
               <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nchar-count">0</div>
+              <div class="grid-right center" id="nchar-bonus" value="bad">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Letras mayúsculas</div>
               <div class="grid-mid-mid">+((largo - n)*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nletrasmayus-count">0</div>
+              <div class="grid-right center" id="nletrasmayus-bonus" value="bad">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Letras minúsculas</div>
               <div class="grid-mid-mid">+((largo - n)*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nletrasminus-count">0</div>
+              <div class="grid-right center" id="nletrasminus-bonus" value="bad">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">números</div>
               <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nnums-count">0</div>
+              <div class="grid-right center" id="nnums-bonus" value="bad">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Símbolos</div>
               <div class="grid-mid-mid">+(n*6)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nsimbolos-count">0</div>
+              <div class="grid-right center" id="nsimbolos-bonus" value="bad">0</div>
 
-              <div class="grid-left-side">img1</div>
-              <div class="descripcionMetrica grid-mid-mid">Números entre caracteres</div>
+              <!-- <div class="grid-left-side">img1</div> -->
+              <div class="descripcionMetrica grid-mid-mid">Números/símbolos entre caracteres</div>
               <div class="grid-mid-mid">+(n*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="nnumsentrechars-count">0</div>
+              <div class="grid-right center" id="nnumsentrechars-bonus" value="bad">0</div>
 
-              <div class="grid-bottom-left-corner">img2</div>
+              <!-- <div class="grid-bottom-left-corner">img2</div> -->
               <div class="descripcionMetrica grid-bottom-mid">Requerimientos</div>
               <div class="grid-bottom-mid">+(n*2)</div>
-              <div class="grid-bottom-mid">0</div>
-              <div class="">0</div>
+              <div class="grid-bottom-mid center grid-separator" id="reqs-count">0</div>
+              <div class="center grid-bottom-right-corner" id="reqs-bonus" value="bad">0</div>
 
-              <!-- deducciones -->
+              <!-- ***** deducciones ***** -->
               <div id="deductions" class="grid-separator grid-title">Deducciones</div>
               
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Solo letras</div>
               <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="sololetras-count">0</div>
+              <div class="grid-right center" id="sololetras-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Solo números</div>
-              <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid">Compuesto</div>
+              <div class="grid-mid-mid center grid-separator" id="solonums-count">0</div>
+              <div class="grid-right center" id="solonums-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Caracteres repetidos</div>
               <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="repchars-count">0</div>
+              <div class="grid-right center" id="repchars-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Letras mayúsculas consecutivas</div>
               <div class="grid-mid-mid">+((largo - n)*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="lmayusconsec-count">0</div>
+              <div class="grid-right center" id="lmayusconsec-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Letras minúsculas consecutivas</div>
               <div class="grid-mid-mid">+((largo - n)*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator"  id="lminusconsec-count">0</div>
+              <div class="grid-right center"  id="lminusconsec-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Números consecutivos</div>
               <div class="grid-mid-mid">+(n*4)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="numsconsec-count">0</div>
+              <div class="grid-right center" id="numsconsec-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Letras en secuencia (3+)</div>
               <div class="grid-mid-mid">+(n*6)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator" id="letrassecuencia-count">0</div>
+              <div class="grid-right center" id="letrassecuencia-deduct" value="good">0</div>
 
-              <div class="grid-left-side">img1</div>
+              <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica grid-mid-mid">Números en secuencia (3+)</div>
               <div class="grid-mid-mid">+(n*2)</div>
-              <div class="grid-mid-mid">0</div>
-              <div class="grid-right">0</div>
+              <div class="grid-mid-mid center grid-separator"  id="numssecuencia-count">0</div>
+              <div class="grid-right center"  id="numssecuencia-deduct" value="good">0</div>
 
-              <div class="grid-bottom-left-corner">img2</div>
+              <!-- <div class="grid-bottom-left-corner">img2</div> -->
               <div class="descripcionMetrica grid-bottom-mid">Símbolos en secuencia (3+)</div>
-              <div class="grid-bottom-mid">+(n*2)</div>
-              <div class="grid-bottom-mid">0</div>
-              <div class="">0</div>
+              <div class="grid-bottom-mid" id="simbolossecuencia-count">+(n*2)</div>
+              <div class="grid-bottom-mid center grid-separator" id="simbolossecuencia-deduct">0</div>
+              <div class="center grid-bottom-right-corner" value="good">0</div>
+
+              <!-- ***** deducciones ***** -->
+              <div id="varios" class="grid-separator grid-title">Varios</div>
+              <div class="center grid-double grid-separator">Bonus</div>
+
+              <!-- <div class="grid-bottom-left-corner">img2</div> -->
+              <div class="descripcionMetrica grid-bottom-mid">Variedad de Caracteres</div>
+              <div class="grid-bottom-mid">Compuesto</div>
+              <div class="grid-double center grid-bottom-right-corner" id="reqs-bonus" value="mild">0</div>
 
             </div>
 
@@ -195,7 +204,7 @@
         </div>
 
         <!-- Info -->
-        <div id="bloqueInfo">
+        <div id="bloqueInfo" class="sticky">
             
           <div class="titleForm">
             <h2>
@@ -230,8 +239,27 @@
 
           <div class="subtitleForm">
             <h3>
-              Leyenda
+              Información General
             </h3>
+          </div>
+          <div class="basicContent">
+            <ul>
+              <li>
+                Ratio:
+                <br>
+                - n : Corresponde al valor "Cantidad" en dicha fila.
+                <br>
+                - largo : Largo total de la contraseña.
+                <br>
+                - Compuesto : Depende de diversos factores.
+              </li>
+              <li>
+                El medidor "nivel" es un reflejo del puntaje final.
+              </li>
+              <li>
+                El puntaje final comprende un número entre 0 y 100.
+              </li>
+            </ul>
           </div>
 
         </div>

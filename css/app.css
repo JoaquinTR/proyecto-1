@@ -11,13 +11,19 @@
 div.sticky {
     position: -webkit-sticky; /* Safari */
     position: sticky;
-    top: 0;
+    top: 1.5%;
 }
 
 .texto{
     font-family: simplificasimplifica;
     font-weight: bold;
     font-size: 25px;
+}
+
+.android-text{
+    font-family: simplificasimplifica;
+    font-weight: bold;
+    font-size: 15px;
 }
 
 div.titleContainer{
@@ -31,7 +37,6 @@ div.titleContainer{
 }
 
 .tituloPagina{
-    /*padding-bottom: 10px;*/
     margin-top: 0px;
     margin-bottom: 0px;
     text-align: center;
@@ -83,6 +88,64 @@ input{
     padding-left: 0px;
 }
 
+meter {
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  
+    width: 100%;
+    height: 30px;
+    
+    /* For Firefox */
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+  
+  /* WebKit */
+meter::-webkit-meter-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+  
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value {
+    border-radius: 3px;
+}
+  
+meter::-webkit-meter-optimum-value {
+    background: #86CC00;
+}
+  
+meter::-webkit-meter-suboptimum-value {
+    background: #FFDB1A;
+}
+  
+meter::-webkit-meter-even-less-good-value  {
+    background: #CC4600;
+}
+  
+  
+/* Firefox */
+meter::-moz-meter-bar {
+    border-radius: 3px;
+}
+  
+meter:-moz-meter-optimum::-moz-meter-bar {
+    background: #86CC00;
+}
+  
+meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: #FFDB1A;
+}
+  
+meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: #CC4600;
+}
+
 ul{
     margin: 0px;
 }
@@ -113,7 +176,7 @@ div.container{
 }
 
 .center{
-    text-align: center;
+    text-align: center !important;
 }
 
 #containerLeft{
@@ -125,7 +188,7 @@ div.container{
     margin-top: 10px;
     margin-bottom: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
-    float: right;
+    float: left;
 }
 
 #bloqueMetricas{
@@ -138,11 +201,11 @@ div.container{
 
 .grid-container{
     display: grid;
-    grid-template-columns: auto 100px 100px 100px auto auto auto;
+    grid-template-columns: 10% 15% 15% auto auto auto;
 }
 
 .descripcionMetrica{
-    grid-column: 2/5;
+    grid-column: 1/5;
 }
 
 .grid-container > div{
@@ -162,10 +225,12 @@ div.container{
 
 .grid-title{
     border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
 }
 
 .grid-bottom-left-corner{
     border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
 }
 
 .grid-left-side{
@@ -180,14 +245,27 @@ div.container{
 
 .grid-bottom-mid{
     border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
 }
 
 .grid-right{
     border-bottom: solid 1px grey;
 }
 
+.grid-bottom-right-corner{
+    border-bottom: solid 1px gray;
+}
+
 #deductions{
     grid-column: 1/8;
+}
+
+#varios{
+    grid-column: 1/6;
+}
+
+.grid-double{
+    grid-column: 6/8;
 }
 
 
@@ -209,4 +287,20 @@ div.container{
 
 .mellt-exceptional{
     color: rgb(0, 0, 202);
+}
+
+div[value="bad"]{
+    background-color: #c20000;
+}
+
+div[value="good"]{
+    background-color: #009b1a;
+}
+
+div[value="mild"]{
+    background-color: #e7d000;
+}
+
+div[value="excep"]{
+    background-color: #003980;
 }
