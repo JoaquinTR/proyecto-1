@@ -94,9 +94,6 @@ meter {
     -moz-appearance: none;
     appearance: none;
   
-    width: 100%;
-    height: 30px;
-    
     /* For Firefox */
     background: #EEE;
     box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
@@ -293,12 +290,12 @@ div[value="bad"]{
     background-color: #c20000;
 }
 
-div[value="good"]{
-    background-color: #009b1a;
-}
-
 div[value="mild"]{
     background-color: #e7d000;
+}
+
+div[value="good"]{
+    background-color: #009b1a;
 }
 
 div[value="excep"]{
