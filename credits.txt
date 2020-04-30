@@ -1,3 +1,5 @@
 Melt: https://github.com/ravisorg/Mellt/tree/master/javascript
 Plantilla: http://www.passwordmeter.com/ 
 generar un reporte en pdf en base a los resultados
+
+ideas: agregar via js title a cada componente pertinente del dom.

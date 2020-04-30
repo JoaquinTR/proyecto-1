@@ -69,6 +69,13 @@ input{
     margin-bottom: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
     float: left;
+    z-index: 1;
+}
+
+.checkbox{
+    height: 25px;
+    width: 25px;
+    float: right;
 }
 
 .titleForm{
@@ -209,6 +216,16 @@ div.container{
     text-align: left;
     padding: 5px;
     display: block;
+    transition: transform .2s;
+}
+
+.zoom{
+    transition: transform .2s;
+    z-index: 0;
+}
+
+.zoom:hover{
+    transform: scale(1.01);
 }
 
 #additions{
@@ -265,24 +282,19 @@ div.container{
     grid-column: 6/8;
 }
 
-
-.mellt-none{
-    color: black;
-}
-
-.mellt-bad{
+div[mellt="bad"]{
     color: red;
 }
 
-.mellt-mild{
-    color: rgb(182, 206, 46);
+div[mellt="mild"]{
+    color: rgb(158, 155, 0);
 }
 
-.mellt-good{
+div[mellt="good"]{
     color: green;
 }
 
-.mellt-exceptional{
+div[mellt="excep"]{
     color: rgb(0, 0, 202);
 }
 
@@ -300,4 +312,8 @@ div[value="good"]{
 
 div[value="excep"]{
     background-color: #003980;
+}
+
+.white{
+    color: rgb(230, 230, 230);
 }
