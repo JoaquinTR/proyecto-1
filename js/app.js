@@ -1,75 +1,99 @@
-// --- INICIALIZACIÓN --- //
 
-//document.getElementById("visibleCheck").checked = false;    //se me guardaba entre reloads
-var mellt = new Mellt();
+/**
+ * Función de inicialización de la página. Se encarga de setear las variables globales y de 
+ * formatear el documento en base a la plataforma.
+ */
+function init(){
+    // -------- VARIABLES GLOBALES ---------
+    // --- variable para cálculo de tiempo de bruteforce:
+    mellt = new Mellt();
 
-var userAgent = navigator.userAgent.toLowerCase();
-var android = userAgent.indexOf("android") > -1;
-if(android){
-    document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
+    // --- variables de acceso al DOM:
+    //_get es un wrapper para obtener el objeto
+    //Elementos de cantidad en adiciones
+    ncharcant = _get("nchar-count");
+    nletrasmayuscant = _get("nletrasmayus-count");
+    nletrasminuscant = _get("nletrasminus-count");
+    nnumscant = _get("nnums-count");
+    nsimboloscant = _get("nsimbolos-count");
+    nnumsentrecharscant = _get("nnumsentrechars-count");
+    reqscant = _get("reqs-count");
+
+    //Elementos de puntos bonus, para optimizar tiempo de acceso sobre memoria.
+    ncharbonus = _get("nchar-bonus");
+    nletrasmayusbonus = _get("nletrasmayus-bonus");
+    nletrasminusbonus = _get("nletrasminus-bonus");
+    nnumsbonus = _get("nnums-bonus");
+    nsimbolosbonus = _get("nsimbolos-bonus");
+    nnumsentrecharsbonus = _get("nnumsentrechars-bonus");
+    reqsbonusdom = _get("reqs-bonus");
+
+    //Elementos de cantidad en deducciones
+    sletrascant = _get("sololetras-count");
+    snumeroscant = _get("solonums-count");
+    repetidoscant = _get("repchars-count");
+    mayusconscant = _get("lmayusconsec-count");
+    minusconscant = _get("lminusconsec-count");
+    numconscant = _get("numsconsec-count");
+    letraseccant = _get("letrassecuencia-count");
+    nseccant = _get("numssecuencia-count");
+    simseccant = _get("simbolossecuencia-count");
+
+    //Elementos de valor de deducciones
+    sletrasdeduct = _get("sololetras-deduct");
+    snumerosdeduct = _get("solonums-deduct");
+    repetidosdeduct = _get("repchars-deduct");
+    mayusconsdeduct = _get("lmayusconsec-deduct");
+    minusconsdeduct = _get("lminusconsec-deduct");
+    numconsdeduct = _get("numsconsec-deduct");
+    letrasecdeduct = _get("letrassecuencia-deduct");
+    nsecdeduct = _get("numssecuencia-deduct");
+    simsecdeduct = _get("simbolossecuencia-deduct");
+
+    //elementos de variedad bonus
+    variedadbonus = _get("variedad-bonus");
+
+    //Elemento de bruteforce
+    bruteforceElem = _get("dyToCrack");
+
+    //password + show/hide "checkbox"
+    pwdElem = _get("passwordPwd");
+    visibilidad = _get("visibleCheck");
+
+    //seteo de página
+    //white/dark mode, inicializador. posiblemente innecesario!
+    if(!window.localStorage.getItem("tema"))
+        window.localStorage.setItem("tema","white");
+
+    let userAgent = navigator.userAgent.toLowerCase();
+    let android = userAgent.indexOf("android") > -1;
+    if(android){
+        document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
+    }
+    console.log("User agent: "+ userAgent + " android: "+android);
+
+    /*de ultima intentar usar .androidText:
+    var htmlEl = document.getElementsByClassName('my-nice-class'); 
+    y hacer un for each con estas instrucciones
+    htmlEl.classList.add("my-nice-class--dimensions_B");
+    htmlEl.classList.remove("my-nice-class--dimensions_A");
+    */
 }
-console.log("User agent: "+ userAgent + " android: "+android);
 
-/*de ultima intentar usar .androidText:
-var htmlEl = document.getElementsByClassName('my-nice-class'); 
-y hacer un for each con estas instrucciones
-htmlEl.classList.add("my-nice-class--dimensions_B");
-htmlEl.classList.remove("my-nice-class--dimensions_A");
+/** 
+ * Wrapper de acceso al DOM por id 
+ * @param {String}   id         Id del elemento del DOM.
+ * @return {HTMLElement}        Elemento asociado al id pasado por parámetro.
 */
+function _get(id){
+    return document.getElementById(id);
+}
 
-//Elementos de cantidad en adiciones
-var ncharcant = document.getElementById("nchar-count");
-var nletrasmayuscant = document.getElementById("nletrasmayus-count");
-var nletrasminuscant = document.getElementById("nletrasminus-count");
-var nnumscant = document.getElementById("nnums-count");
-var nsimboloscant = document.getElementById("nsimbolos-count");
-var nnumsentrecharscant = document.getElementById("nnumsentrechars-count");
-var reqscant = document.getElementById("reqs-count");
-
-//Elementos de puntos bonus, para optimizar tiempo de acceso sobre memoria.
-var ncharbonus = document.getElementById("nchar-bonus");
-var nletrasmayusbonus = document.getElementById("nletrasmayus-bonus");
-var nletrasminusbonus = document.getElementById("nletrasminus-bonus");
-var nnumsbonus = document.getElementById("nnums-bonus");
-var nsimbolosbonus = document.getElementById("nsimbolos-bonus");
-var nnumsentrecharsbonus = document.getElementById("nnumsentrechars-bonus");
-var reqsbonusdom = document.getElementById("reqs-bonus");
-
-//Elementos de cantidad en deducciones
-var sletrascant = document.getElementById("sololetras-count");
-var snumeroscant = document.getElementById("solonums-count");
-var repetidoscant = document.getElementById("repchars-count");
-var mayusconscant = document.getElementById("lmayusconsec-count");
-var minusconscant = document.getElementById("lminusconsec-count");
-var numconscant = document.getElementById("numsconsec-count");
-var letraseccant = document.getElementById("letrassecuencia-count");
-var nseccant = document.getElementById("numssecuencia-count");
-var simseccant = document.getElementById("simbolossecuencia-count");
-
-//Elementos de valor de deducciones
-var sletrasdeduct = document.getElementById("sololetras-deduct");
-var snumerosdeduct = document.getElementById("solonums-deduct");
-var repetidosdeduct = document.getElementById("repchars-deduct");
-var mayusconsdeduct = document.getElementById("lmayusconsec-deduct");
-var minusconsdeduct = document.getElementById("lminusconsec-deduct");
-var numconsdeduct = document.getElementById("numsconsec-deduct");
-var letrasecdeduct = document.getElementById("letrassecuencia-deduct");
-var nsecdeduct = document.getElementById("numssecuencia-deduct");
-var simsecdeduct = document.getElementById("simbolossecuencia-deduct");
-
-//elementos de variedad bonus
-var variedadbonus = document.getElementById("variedad-bonus");
-
-//Elemento de bruteforce
-var bruteforceElem = document.getElementById("dyToCrack");
-
-//password + visible/show
-var pwdElem = document.getElementById("passwordPwd");
-var visibilidad = document.getElementById("visibleCheck");
-
-// --- CÓDIGO --- //
-
+/**
+ * Intercambia la visibilidad del campo contraseña.
+*/
 function togglePwd(){
+    
     if (pwdElem.type === 'text') {
         pwdElem.type = 'password'
         visibilidad.setAttribute("src","css/images/show.png")
@@ -81,10 +105,16 @@ function togglePwd(){
     
 }
 
+/** 
+ * Instancia el documento con los resultados del análisis de la contraseña provista por el usuario.
+ * Se compone de tres etapas, parseo de la contraseña, decisiones en base a los resultados (cálculos)
+ * y instanciación del documento con los resultados.
+ * Por una cuestión de optimalidad, los objetos receptores de los resultados y aprovechando su inmutabilidad
+ * son accedidos solo una vez durante la carga de este archivo y presentados como variables globales,
+ * ahorrando tiempo de acceso innecesario.
+ * @param {String}   pwd         Contraseña ingresada en el campo password dentro del bloque "Input".
+*/
 function check(pwd){
-    //tiempo necesario de crackeo
-    var daysToCrack = mellt.CheckPassword(document.getElementById("passwordPwd").value);
-
     /***** Parseo ******/
     //vars
     let largoPwd = pwd.length;
@@ -98,19 +128,48 @@ function check(pwd){
     let consecMayus = 0;
     let consecMinus = 0;
     let consecNums = 0;
-    let cantCharRepetidos = 0;      //dbería contalizar la cantidad de caracteres totales en algún tipo de "mapeo"
+    let secuenciaLetras = 0;
+    let secuenciaNumeros = 0;
+    let secuenciaSimbolos = 0;
+    let cantCharRepetidos = 0;          //dbería contalizar la cantidad de caracteres totales en algún tipo de "mapeo"
 
     //aux
-    let EntreChars = 0;    //control de ocurrencia de números/símbolos entre caracteres
-    let last = 0;          //control de último caracter : 0=> inicial ; 1=> minúscula ; 2=> mayúscula ; 3=> número
+    let cantidadAnalizada = 0;
+    let EntreChars = 0;                 //control de ocurrencia de números/símbolos entre caracteres.
+    let lastTipo = 0;                   //control de último caracter : 0=> inicial ; 1=> minúscula ; 2=> mayúscula ; 3=> número ; 4=> símbolo.
+    
+    let last = '';                      //utlimo caracter analizado.
+    let caracteresEnSecuencia = -1;     //cantidad de caracteres del mismo tipo en cadena.
+    let counts = Object();              //Objeto usado como "mapeo" para contar las apariciones de letras. 
     for (const c of pwd) {
         if(((c>='a' && c<='z') || (c === 'á') || (c === 'é') || (c === 'í') || (c === 'ó') || (c === 'ú'))){
             //minúscula
             cantLetrasMinus++;
 
-            if(last == 1)
-                consecMinus ++;
-            last = 1;
+            if( (lastTipo == 1)){
+                consecMinus ++;     //si el ultimo era de este tipo lo cuento como repetido
+
+                //control de secuencia
+                //si tengo un caracter del mismo tipo y es el anterior a este sumo 1 a cadena repetidos.
+                if((c.charCodeAt(0) == last.charCodeAt(0)+1) && ((lastTipo == 2) || (lastTipo == 1)))
+                    caracteresEnSecuencia ++;
+                else if(caracteresEnSecuencia >= 1){
+                    secuenciaLetras += caracteresEnSecuencia;
+                    caracteresEnSecuencia = -1;
+                }else
+                    caracteresEnSecuencia = -1;
+
+            } else if((lastTipo == 2) && (c.charCodeAt(0) == last.charCodeAt(0) + 33)){ // + 32 me lleva a las minúsculas + 1 a la siguiente
+                caracteresEnSecuencia ++;
+            }
+            else if( (lastTipo == 2) && (caracteresEnSecuencia >= 1)){
+                secuenciaLetras += caracteresEnSecuencia;
+                caracteresEnSecuencia = -1;
+            }else
+                caracteresEnSecuencia = -1;
+
+            tipoActual = 1;
+
 
             if(EntreChars)
                 numsEntreChars++;
@@ -119,18 +178,52 @@ function check(pwd){
             //mayúscula
             cantLetrasMayus++;
 
-            if(last == 2)
-                consecMayus ++;
-            last = 2;
+            if(lastTipo == 2){
+                consecMayus ++;     //si el ultimo era de este tipo lo cuento como repetido
 
+                //control de secuencia
+                //si tengo un caracter del mismo tipo y es el anterior a este sumo 1 a cadena repetidos.
+                if((c.charCodeAt(0) == last.charCodeAt(0)+1) && ((lastTipo == 1) || (lastTipo == 2)))
+                    caracteresEnSecuencia ++;
+                else if(caracteresEnSecuencia >= 1){
+                    secuenciaLetras += caracteresEnSecuencia;
+                    caracteresEnSecuencia = -1;
+                }else
+                    caracteresEnSecuencia = -1;
+
+            }else if((lastTipo == 1) && (c.charCodeAt(0) == last.charCodeAt(0) - 31)){ // - 31 me lleva a las mayúsculas + 1 a la siguiente
+                caracteresEnSecuencia ++;
+            }
+            else if( (lastTipo == 1) && (caracteresEnSecuencia >= 1)){
+                secuenciaLetras += caracteresEnSecuencia;
+                caracteresEnSecuencia = -1;
+            }else
+                caracteresEnSecuencia = -1;
+
+            tipoActual = 2;
             EntreChars = 0;
         }
         else if( (c>='0' && c<='9') ){ //número
             cantNumeros++;
 
-            if(last == 3)
-                consecNums ++;
-            last = 3;
+            if(lastTipo == 3){
+                consecNums ++;     //si el ultimo era de este tipo lo cuento como repetido
+
+                //control de secuencia
+                //si tengo un caracter del mismo tipo y es el anterior a este sumo 1 a cadena repetidos.
+                if(c.charCodeAt(0) == last.charCodeAt(0)+1)
+                    caracteresEnSecuencia ++;
+                else if(caracteresEnSecuencia >= 1){
+                    secuenciaNumeros += caracteresEnSecuencia;
+                    caracteresEnSecuencia = -1;
+                }else
+                    caracteresEnSecuencia = -1;
+
+            }
+            else
+                caracteresEnSecuencia = - 1;
+                
+            tipoActual = 3;
 
             if ((!EntreChars) && (cantLetrasMayus || cantLetrasMinus || cantSimbolos || cantNumeros))
                 EntreChars = 1;
@@ -138,15 +231,78 @@ function check(pwd){
                 numsEntreChars++;
         }else{ //símbolo
             cantSimbolos++;
+
+            //control de secuencia
+            //si tengo un caracter del mismo tipo y es el anterior a este sumo 1 a cadena repetidos.
+            if(lastTipo == 4){
+                if (c.charCodeAt(0) == last.charCodeAt(0)+1)
+                    caracteresEnSecuencia ++;
+                else if(caracteresEnSecuencia >= 1){
+                    secuenciaLetras += caracteresEnSecuencia;
+                    caracteresEnSecuencia = -1;
+                }else
+                    caracteresEnSecuencia = -1;
+            }
+            else
+                caracteresEnSecuencia = -1;
+            
+
             if ((!EntreChars) && (cantLetrasMayus || cantLetrasMinus || cantSimbolos || cantNumeros))
                 EntreChars = 1;
             else
                 numsEntreChars++;
+            
+            tipoActual = 4;
         }
 
+        last = c;
+        cantidadAnalizada ++;
+
+        lastTipo = tipoActual;
+        counts[c] = (counts[c] || 0) + 1    //agrego al objeto de cuenta de apariciones el caracter analizado.
+    }
+    //terminé de analizar y tenía caracteres en secuencia
+    if(caracteresEnSecuencia >= 1 ){  
+        switch(lastTipo){
+            case 1:
+            case 2:
+                secuenciaLetras += caracteresEnSecuencia;
+                break;
+            case 3:
+                secuenciaNumeros += caracteresEnSecuencia;
+                break;
+            case 4:
+                secuenciaSimbolos += caracteresEnSecuencia;
+                break;
+        }
     }
 
     /****** Decisiones ******/
+
+    //------- Cálculo dias de bruteforce -------//
+    //automáticamente se pasan a años en caso de superar los 365 días
+
+    var daysToCrack = mellt.CheckPassword(pwdElem.value); //tiempo necesario de crackeo en base al análisis propuesto por Mellt.
+    if(daysToCrack == -1){
+        bruteforceElem.innerHTML = "Dentro de las más comunes";
+        bruteforceElem.setAttribute("mellt","bad");
+    }
+    else if(daysToCrack == 0){
+            bruteforceElem.innerHTML = "0 días";
+            bruteforceElem.setAttribute("mellt","bad");
+        }
+        else if(daysToCrack < 365){
+            bruteforceElem.innerHTML = (daysToCrack === 1) ? daysToCrack + " día" : daysToCrack + " días";
+            bruteforceElem.setAttribute("mellt","mild");
+            }
+            else{
+                daysToCrack = daysToCrack / 365;
+                bruteforceElem.innerHTML = ""
+                bruteforceElem.innerHTML = (daysToCrack < 2739726) ? Math.round(daysToCrack) + " años" : "Más de 27 millones de años";
+                bruteforceElem.classList = "";
+                bruteforceElem.classList.add("center");
+                (daysToCrack > 25000) ? bruteforceElem.setAttribute("mellt","excep") : bruteforceElem.setAttribute("mellt","good");
+            }
 
     //------- Cálculo de bonus -------//
     //bonus total por categoría:
@@ -180,38 +336,7 @@ function check(pwd){
         reqsBonus = reqs * 2;
     }
 
-    //dias de bruteforce:
-    //automáticamente se pasan a años en caso de superar los 365 días
-    if(daysToCrack == -1){
-        bruteforceElem.innerHTML = "Dentro de las más comunes";
-        bruteforceElem.setAttribute("mellt","bad");
-        /* bruteforceElem.classList = "";
-        bruteforceElem.classList.add("center");
-        bruteforceElem.classList.add("mellt-bad"); */
-    }
-    else if(daysToCrack == 0){
-            bruteforceElem.innerHTML = "0 días";
-            bruteforceElem.setAttribute("mellt","bad");
-            /* bruteforceElem.classList = "";
-            bruteforceElem.classList.add("center");
-            bruteforceElem.classList.add("mellt-bad"); */
-        }
-        else if(daysToCrack < 365){
-            bruteforceElem.innerHTML = (daysToCrack === 1) ? daysToCrack + " día" : daysToCrack + " días";
-            bruteforceElem.setAttribute("mellt","mild");
-            /* bruteforceElem.classList = "";
-            bruteforceElem.classList.add("center");
-            bruteforceElem.classList.add("mellt-mild"); */
-            }
-            else{
-                daysToCrack = daysToCrack / 365;
-                bruteforceElem.innerHTML = ""
-                bruteforceElem.innerHTML = (daysToCrack < 2739726) ? Math.round(daysToCrack) + " años" : "Más de 27 millones de años";
-                bruteforceElem.classList = "";
-                bruteforceElem.classList.add("center");
-                (daysToCrack > 25000) ? bruteforceElem.setAttribute("mellt","excep") : bruteforceElem.setAttribute("mellt","good");
-            }
-
+    
     //------- Cálculo de deducciones -------//
     //Calculo de valores de cantidad:
     let sololetras = ( (!cantNumeros) && (!cantSimbolos) ) ? largoPwd : 0;
@@ -223,6 +348,9 @@ function check(pwd){
     let deductMayusConsec = consecMayus * 4;
     let deductMinusConsec = consecMinus * 4;
     let deductNumsConsec = consecNums * 4;
+    let deductLetrasSec = secuenciaLetras * 3;
+    let deductNumerosSec = secuenciaNumeros * 3;
+    let deductSimbolosSec = secuenciaSimbolos * 3;
 
     /****** Impresión a usuario ******/
 
@@ -280,20 +408,56 @@ function check(pwd){
     mayusconscant.innerHTML = consecMayus;
     minusconscant.innerHTML = consecMinus;
     numconscant.innerHTML = consecNums;
-    letraseccant.innerHTML = 0;
-    nseccant.innerHTML = 0;
-    simseccant.innerHTML = 0;
+    letraseccant.innerHTML = secuenciaLetras;
+    nseccant.innerHTML = secuenciaNumeros;
+    simseccant.innerHTML = secuenciaSimbolos;
     
     //---- Deducción:
-    sletrasdeduct.innerHTML = (deductSoloLetras) ? "- "+deductSoloLetras : 0;
-    snumerosdeduct.innerHTML = (deductSoloNum) ? "- "+deductSoloNum : 0;
-    repetidosdeduct.innerHTML = 0;
-    mayusconsdeduct.innerHTML = (deductMayusConsec) ? "- "+deductMayusConsec : 0;
-    minusconsdeduct.innerHTML = (deductMinusConsec) ? "- "+deductMinusConsec : 0;
-    numconsdeduct.innerHTML = (deductNumsConsec) ? "- "+deductNumsConsec : 0;
-    letrasecdeduct.innerHTML = 0;
-    nsecdeduct.innerHTML = 0;
-    simsecdeduct.innerHTML = 0;
+    sletrasdeduct.innerHTML = (deductSoloLetras) ? "- " + deductSoloLetras : 0;
+    if((deductSoloLetras >= 1)) sletrasdeduct.setAttribute("value","bad"); 
+    else sletrasdeduct.setAttribute("value","good"); 
 
-    //para los colores usar css en base al value ? lo que iba con []
+    snumerosdeduct.innerHTML = (deductSoloNum) ? "- " + deductSoloNum : 0;
+    if((deductSoloNum >= 1)) snumerosdeduct.setAttribute("value","bad"); 
+    else snumerosdeduct.setAttribute("value","good"); 
+
+    repetidosdeduct.innerHTML = 0;
+
+
+    mayusconsdeduct.innerHTML = (deductMayusConsec) ? "- " + deductMayusConsec : 0;
+    if( (deductMayusConsec >= 4) && (deductMayusConsec < 8)  ) mayusconsdeduct.setAttribute("value","mild"); 
+    else if((deductMayusConsec >= 1)) mayusconsdeduct.setAttribute("value","bad"); 
+    else mayusconsdeduct.setAttribute("value","good"); 
+
+
+    minusconsdeduct.innerHTML = (deductMinusConsec) ? "- " + deductMinusConsec : 0;
+    if( (deductMinusConsec >= 2) && (deductMinusConsec < 12)  ) minusconsdeduct.setAttribute("value","mild"); 
+    else if((deductMinusConsec >= 12)) minusconsdeduct.setAttribute("value","bad"); 
+    else minusconsdeduct.setAttribute("value","good"); 
+
+
+    numconsdeduct.innerHTML = (deductNumsConsec) ? "- " + deductNumsConsec : 0;
+    if( (deductNumsConsec >= 4) && (deductNumsConsec < 8)  ) numconsdeduct.setAttribute("value","mild"); 
+    else if((deductNumsConsec >= 8)) numconsdeduct.setAttribute("value","bad"); 
+    else numconsdeduct.setAttribute("value","good"); 
+
+
+    letrasecdeduct.innerHTML = (deductLetrasSec) ? "- " + deductLetrasSec : 0;
+    if( (deductLetrasSec >= 3) && (deductLetrasSec < 6)  ) letrasecdeduct.setAttribute("value","mild"); 
+    else if((deductLetrasSec >= 6)) letrasecdeduct.setAttribute("value","bad"); 
+    else letrasecdeduct.setAttribute("value","good"); 
+
+
+    nsecdeduct.innerHTML = (deductNumerosSec) ? "- " + deductNumerosSec : 0;
+    if( (deductNumerosSec >= 3) && (deductNumerosSec < 6)  ) nsecdeduct.setAttribute("value","mild"); 
+    else if((deductNumerosSec >= 6)) nsecdeduct.setAttribute("value","bad"); 
+    else nsecdeduct.setAttribute("value","good"); 
+
+
+    simsecdeduct.innerHTML = (deductSimbolosSec) ? "- " + deductSimbolosSec : 0;
+    if( (deductSimbolosSec >= 3) && (deductSimbolosSec < 6)  ) simsecdeduct.setAttribute("value","mild"); 
+    else if((deductSimbolosSec >= 6)) simsecdeduct.setAttribute("value","bad"); 
+    else simsecdeduct.setAttribute("value","good");
+
+
 }

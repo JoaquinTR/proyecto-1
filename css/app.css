@@ -55,6 +55,7 @@ body{
 
 #mainContainer{
     background: transparent;
+    padding-left: 15%;/* EXPERIMENTAL */
 }
 
 input{
@@ -303,7 +304,8 @@ div[value="bad"]{
 }
 
 div[value="mild"]{
-    background-color: #e7d000;
+    background-color: #f3bc08;
+    color: grey;
 }
 
 div[value="good"]{
@@ -316,4 +318,5 @@ div[value="excep"]{
 
 .white{
     color: rgb(230, 230, 230);
+    font-weight: bold;
 }
