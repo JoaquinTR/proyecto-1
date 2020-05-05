@@ -13,6 +13,10 @@
   </head>
   <body onload="init()">
     <div class="titleContainer">
+      <div class="switch">
+        <input type="checkbox" id="checkTema" onclick="toggleTema(checked)">
+        <label><i></i></label>
+      </div> 
       <h1 class="tituloPagina">pw-lizer</h1>
     </div>
 
@@ -44,10 +48,10 @@
   
               <div class="container inline" title="porcentaje de cumplimiento de requerimientos.">
                 <div>
-                  <label>Nivel</label>
+                  <label>Seguridad</label>
                 </div>
                 <div class="center" >
-                  <meter min="0" max="100" none="0" low="25" high="75" optimum="100" value="0"></meter>
+                  <meter min="0" max="100" none="0" low="25" high="75" optimum="100" value="0" id="meter"></meter>
                 </div>
               </div>
   
@@ -156,7 +160,7 @@
 
               <!-- <div class="grid-left-side">img1</div> -->
               <div class="descripcionMetrica zoom grid-mid-mid"
-              title="Cantidad de caracteres repetidos que posee la contraseña."
+              title="Cantidad de caracteres repetidos que posee la contraseña. Es indiferente en cuanto a mayúsculas y minúsculas."
               >Caracteres repetidos</div>
               <div class="grid-mid-mid">Compuesto</div>
               <div class="grid-mid-mid center grid-separator" id="repchars-count">0</div>
@@ -182,7 +186,7 @@
               <div class="descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números consecutivos que posee la contaseña."
               >Números consecutivos</div>
-              <div class="grid-mid-mid">-(n*4)</div>
+              <div class="grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="numsconsec-count">0</div>
               <div class="grid-right center white" id="numsconsec-deduct" value="good">0</div>
 

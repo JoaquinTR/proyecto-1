@@ -6,6 +6,7 @@
     --color-grey: #C5C6C7;
     --color-lgreen: #66FCF1;
     --color-dgreen: #45A29E;
+    --color-title-green: #4CAF50;
 }
 
 div.sticky {
@@ -81,7 +82,7 @@ input{
 
 .titleForm{
     color: #fff !important;
-    background-color: #4CAF50 !important;
+    background-color: var(--color-title-green) !important;
     padding: 0.01em 16px;
 }
 
@@ -319,4 +320,152 @@ div[value="excep"]{
 .white{
     color: rgb(230, 230, 230);
     font-weight: bold;
+}
+
+/* .switch {
+    padding-left: 2%;
+    width: 5%;
+    height: 20px;
+    position: absolute;
+} */
+
+.switch {
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    margin-top: 1.75vh;
+    margin-left: 1.4vw;
+}
+
+.switch input {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.switch label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: black;
+    border-radius: 40px;
+    box-shadow:
+        inset 0 3px 8px 1px rgba(0,0,0,0.2),
+        0 1px 0 rgba(255,255,255,0.5);
+}
+
+.switch label:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -8px; right: -8px; bottom: -8px; left: -8px;
+    border-radius: inherit;
+    background: #ccc; /* Fallback */
+    background: linear-gradient(#f2f2f2, #ababab);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3),
+        0 1px 1px rgba(0,0,0,0.25);
+}
+
+.switch label:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -18px; right: -18px; bottom: -18px; left: -18px;
+    border-radius: inherit;
+    background: #eee; /* Fallback */
+    background: linear-gradient(#e5e7e6, #eee);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -webkit-filter: blur(1px); /* Smooth trick */
+    filter: blur(1px); /* Future-proof */
+}
+
+.switch label i:after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    top: 25%;
+    width: 70%;
+    height: 50%;
+    background: #d2cbc3; /* Fallback */
+    background: linear-gradient(#cbc7bc, #d2cbc3);
+    border-radius: inherit;
+}
+
+.switch label:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -18px; right: -18px; bottom: -18px; left: -18px;
+    border-radius: inherit;
+    background: #eee; /* Fallback */
+    background: linear-gradient(#e5e7e6, #eee);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -webkit-filter: blur(1px); /* Smooth trick */
+    filter: blur(1px); /* Future-proof */
+}
+
+.switch label i {
+    display: block;
+    height: 100%;
+    width: 60%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border-radius: inherit;
+    background: #b2ac9e; /* Fallback */
+    background: linear-gradient(#f3f2f7, var(--color-blue));
+    box-shadow:
+        inset 0 1px 0 white,
+        0 0 8px rgba(0,0,0,0.3),
+        0 5px 5px rgba(0,0,0,0.2);
+}
+
+.switch label i:after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    top: 25%;
+    width: 70%;
+    height: 50%;
+    background: #d2cbc3; /* Fallback */
+    background: linear-gradient(var(--color-blue), var(--color-blue));
+    border-radius: inherit;
+}
+
+.switch label i:before {
+    content: "dark";
+    position: absolute;
+    top: 75%;
+    right: -50%;
+    margin-top: -12px;
+    color: grey; /* Fallback */
+    color: grey;
+    font-style: normal;
+    font-weight: bold;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.switch input:checked ~ label { /* Background */
+    background: white;
+}
+
+.switch input:checked ~ label i { /* Toggle */
+    left: auto;
+    right: -1%;
+}
+
+.switch input:checked ~ label i:before { /* On/off */
+    content: "white";
+    right: 105%;
+    color: black;
 }

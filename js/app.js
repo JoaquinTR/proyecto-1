@@ -8,62 +8,79 @@ function init(){
     // --- variable para cálculo de tiempo de bruteforce:
     mellt = new Mellt();
 
-    // --- variables de acceso al DOM:
-    //_get es un wrapper para obtener el objeto
-    //Elementos de cantidad en adiciones
-    ncharcant = _get("nchar-count");
-    nletrasmayuscant = _get("nletrasmayus-count");
-    nletrasminuscant = _get("nletrasminus-count");
-    nnumscant = _get("nnums-count");
-    nsimboloscant = _get("nsimbolos-count");
-    nnumsentrecharscant = _get("nnumsentrechars-count");
-    reqscant = _get("reqs-count");
+    //interfaz del DOM
+    interfaz = {
 
-    //Elementos de puntos bonus, para optimizar tiempo de acceso sobre memoria.
-    ncharbonus = _get("nchar-bonus");
-    nletrasmayusbonus = _get("nletrasmayus-bonus");
-    nletrasminusbonus = _get("nletrasminus-bonus");
-    nnumsbonus = _get("nnums-bonus");
-    nsimbolosbonus = _get("nsimbolos-bonus");
-    nnumsentrecharsbonus = _get("nnumsentrechars-bonus");
-    reqsbonusdom = _get("reqs-bonus");
+        // --- variables de acceso al DOM:
+        //_get es un wrapper para obtener el objeto
+        //Elementos de cantidad en adiciones
+        ncharcant : _get("nchar-count"),
+        nletrasmayuscant : _get("nletrasmayus-count"),
+        nletrasminuscant : _get("nletrasminus-count"),
+        nnumscant : _get("nnums-count"),
+        nsimboloscant : _get("nsimbolos-count"),
+        nnumsentrecharscant : _get("nnumsentrechars-count"),
+        reqscant : _get("reqs-count"),
 
-    //Elementos de cantidad en deducciones
-    sletrascant = _get("sololetras-count");
-    snumeroscant = _get("solonums-count");
-    repetidoscant = _get("repchars-count");
-    mayusconscant = _get("lmayusconsec-count");
-    minusconscant = _get("lminusconsec-count");
-    numconscant = _get("numsconsec-count");
-    letraseccant = _get("letrassecuencia-count");
-    nseccant = _get("numssecuencia-count");
-    simseccant = _get("simbolossecuencia-count");
+        //Elementos de puntos bonus, para optimizar tiempo de acceso sobre memoria.
+        ncharbonus : _get("nchar-bonus"),
+        nletrasmayusbonus : _get("nletrasmayus-bonus"),
+        nletrasminusbonus : _get("nletrasminus-bonus"),
+        nnumsbonus : _get("nnums-bonus"),
+        nsimbolosbonus : _get("nsimbolos-bonus"),
+        nnumsentrecharsbonus : _get("nnumsentrechars-bonus"),
+        reqsbonusdom : _get("reqs-bonus"),
 
-    //Elementos de valor de deducciones
-    sletrasdeduct = _get("sololetras-deduct");
-    snumerosdeduct = _get("solonums-deduct");
-    repetidosdeduct = _get("repchars-deduct");
-    mayusconsdeduct = _get("lmayusconsec-deduct");
-    minusconsdeduct = _get("lminusconsec-deduct");
-    numconsdeduct = _get("numsconsec-deduct");
-    letrasecdeduct = _get("letrassecuencia-deduct");
-    nsecdeduct = _get("numssecuencia-deduct");
-    simsecdeduct = _get("simbolossecuencia-deduct");
+        //Elementos de cantidad en deducciones
+        sletrascant : _get("sololetras-count"),
+        snumeroscant : _get("solonums-count"),
+        repetidoscant : _get("repchars-count"),
+        mayusconscant : _get("lmayusconsec-count"),
+        minusconscant : _get("lminusconsec-count"),
+        numconscant : _get("numsconsec-count"),
+        letraseccant : _get("letrassecuencia-count"),
+        nseccant : _get("numssecuencia-count"),
+        simseccant : _get("simbolossecuencia-count"),
 
-    //elementos de variedad bonus
-    variedadbonus = _get("variedad-bonus");
+        //Elementos de valor de deducciones
+        sletrasdeduct : _get("sololetras-deduct"),
+        snumerosdeduct : _get("solonums-deduct"),
+        repetidosdeduct : _get("repchars-deduct"),
+        mayusconsdeduct : _get("lmayusconsec-deduct"),
+        minusconsdeduct : _get("lminusconsec-deduct"),
+        numconsdeduct : _get("numsconsec-deduct"),
+        letrasecdeduct : _get("letrassecuencia-deduct"),
+        nsecdeduct : _get("numssecuencia-deduct"),
+        simsecdeduct : _get("simbolossecuencia-deduct"),
 
-    //Elemento de bruteforce
-    bruteforceElem = _get("dyToCrack");
+        //elementos de variedad bonus
+        variedadbonus : _get("variedad-bonus"),
 
-    //password + show/hide "checkbox"
-    pwdElem = _get("passwordPwd");
-    visibilidad = _get("visibleCheck");
+        //Elemento de bruteforce
+        bruteforceElem : _get("dyToCrack"),
+
+        //password + show/hide "checkbox"
+        pwdElem : _get("passwordPwd"),
+        visibilidad : _get("visibleCheck"),
+
+        //medidor
+        meter : _get("meter")
+}
 
     //seteo de página
     //white/dark mode, inicializador. posiblemente innecesario!
-    if(!window.localStorage.getItem("tema"))
+    let tema = window.localStorage.getItem("tema");
+    if(!tema)
         window.localStorage.setItem("tema","white");
+    if(tema=="white"){
+        console.log("cambio a true");
+        document.getElementById("checkTema").checked = true;
+        toggleTema(true);
+    }else{
+        console.log("cambio a black");
+        document.getElementById("checkTema").checked = false;
+        toggleTema(false);
+    }
 
     let userAgent = navigator.userAgent.toLowerCase();
     let android = userAgent.indexOf("android") > -1;
@@ -89,18 +106,33 @@ function _get(id){
     return document.getElementById(id);
 }
 
+/** 
+ * Intercambia los estilos entre modo normal y oscuro.
+ * @param {boolean}   checked         Valor actual del checkbox, true >> white, false >> black.
+*/
+function toggleTema(checked){
+    console.log(checked);
+    if(checked){
+        //aca seteo todos los estilos a blanco.
+    }
+    else{
+        //aca seteo todos los estilos a oscuro.
+    }
+}
+
+
 /**
  * Intercambia la visibilidad del campo contraseña.
 */
 function togglePwd(){
     
-    if (pwdElem.type === 'text') {
-        pwdElem.type = 'password'
-        visibilidad.setAttribute("src","css/images/show.png")
+    if (interfaz.pwdElem.type === 'text') {
+        interfaz.pwdElem.type = 'password'
+        interfaz.visibilidad.setAttribute("src","css/images/show.png")
     }
     else{
-        pwdElem.type = 'text';
-        visibilidad.setAttribute("src","css/images/hide.png")
+        interfaz.pwdElem.type = 'text';
+        interfaz.visibilidad.setAttribute("src","css/images/hide.png")
     }
     
 }
@@ -115,8 +147,9 @@ function togglePwd(){
  * @param {String}   pwd         Contraseña ingresada en el campo password dentro del bloque "Input".
 */
 function check(pwd){
+
     /***** Parseo ******/
-    //vars
+
     let largoPwd = pwd.length;
     let cantLetrasMayus = 0;
     let cantLetrasMinus = 0;
@@ -259,7 +292,7 @@ function check(pwd){
         cantidadAnalizada ++;
 
         lastTipo = tipoActual;
-        counts[c] = (counts[c] || 0) + 1    //agrego al objeto de cuenta de apariciones el caracter analizado.
+        counts[c.toLowerCase()] = (counts[c.toLowerCase()] || 0) + 1    //agrego al objeto de cuenta de apariciones el caracter analizado.
     }
     //terminé de analizar y tenía caracteres en secuencia
     if(caracteresEnSecuencia >= 1 ){  
@@ -279,29 +312,29 @@ function check(pwd){
 
     /****** Decisiones ******/
 
+    let total = 0;
+
     //------- Cálculo dias de bruteforce -------//
     //automáticamente se pasan a años en caso de superar los 365 días
 
-    var daysToCrack = mellt.CheckPassword(pwdElem.value); //tiempo necesario de crackeo en base al análisis propuesto por Mellt.
+    var daysToCrack = mellt.CheckPassword(interfaz.pwdElem.value); //tiempo necesario de crackeo en base al análisis propuesto por Mellt.
     if(daysToCrack == -1){
-        bruteforceElem.innerHTML = "Dentro de las más comunes";
-        bruteforceElem.setAttribute("mellt","bad");
+        interfaz.bruteforceElem.innerHTML = "Dentro de las más comunes";
+        interfaz.bruteforceElem.setAttribute("mellt","bad");
     }
     else if(daysToCrack == 0){
-            bruteforceElem.innerHTML = "0 días";
-            bruteforceElem.setAttribute("mellt","bad");
+            interfaz.bruteforceElem.innerHTML = "0 días";
+            interfaz.bruteforceElem.setAttribute("mellt","bad");
         }
         else if(daysToCrack < 365){
-            bruteforceElem.innerHTML = (daysToCrack === 1) ? daysToCrack + " día" : daysToCrack + " días";
-            bruteforceElem.setAttribute("mellt","mild");
+            interfaz.bruteforceElem.innerHTML = (daysToCrack === 1) ? daysToCrack + " día" : daysToCrack + " días";
+            interfaz.bruteforceElem.setAttribute("mellt","mild");
             }
             else{
                 daysToCrack = daysToCrack / 365;
-                bruteforceElem.innerHTML = ""
-                bruteforceElem.innerHTML = (daysToCrack < 2739726) ? Math.round(daysToCrack) + " años" : "Más de 27 millones de años";
-                bruteforceElem.classList = "";
-                bruteforceElem.classList.add("center");
-                (daysToCrack > 25000) ? bruteforceElem.setAttribute("mellt","excep") : bruteforceElem.setAttribute("mellt","good");
+                interfaz.bruteforceElem.innerHTML = ""
+                interfaz.bruteforceElem.innerHTML = (daysToCrack < 2739726) ? Math.round(daysToCrack) + " años" : "Más de 27 millones de años";
+                (daysToCrack > 25000) ? interfaz.bruteforceElem.setAttribute("mellt","excep") : interfaz.bruteforceElem.setAttribute("mellt","good");
             }
 
     //------- Cálculo de bonus -------//
@@ -336,128 +369,153 @@ function check(pwd){
         reqsBonus = reqs * 2;
     }
 
+    //adiciones al total
+    total += reqsBonus + bonusentrechars + bonussim + bonusnum + bonusminus + bonusmayus + bonuschars;
     
     //------- Cálculo de deducciones -------//
     //Calculo de valores de cantidad:
+    //repetidos: si la cantidad es menor que largo/2, n*2, sino n*3.
+    let cantidadRepeticiones = 0;
+    for (const letra in counts) {
+        if(counts[letra]>1)
+            cantidadRepeticiones += counts[letra];
+    }
     let sololetras = ( (!cantNumeros) && (!cantSimbolos) ) ? largoPwd : 0;
     let solonum = ( (!cantLetrasMayus) && (!cantLetrasMinus) && (!cantSimbolos) ) ? largoPwd : 0;
 
     //Deducción total por categoría:
     let deductSoloLetras = sololetras * 4;
     let deductSoloNum = solonum * 4;
-    let deductMayusConsec = consecMayus * 4;
-    let deductMinusConsec = consecMinus * 4;
-    let deductNumsConsec = consecNums * 4;
+    let deductMayusConsec = consecMayus * 2;
+    let deductMinusConsec = consecMinus * 2;
+    let deductNumsConsec = consecNums * 2;
     let deductLetrasSec = secuenciaLetras * 3;
     let deductNumerosSec = secuenciaNumeros * 3;
     let deductSimbolosSec = secuenciaSimbolos * 3;
+    console.log(cantidadRepeticiones, largoPwd, largoPwd/2)
+    let deductRepeticiones = 0;
+
+    //deducciones al total
+    total -= deductSoloLetras + deductSoloNum + deductMayusConsec + deductMinusConsec + deductNumsConsec + deductLetrasSec + deductNumerosSec + deductSimbolosSec + deductRepeticiones;
+
+    //ajuste final de total
+    if(total<0) total = 0;
+    else if(total>100) total = 100;
 
     /****** Impresión a usuario ******/
 
     //------- Adiciones -------//
     //---- Cantidad:
-    ncharcant.innerHTML = largoPwd;
-    nletrasmayuscant.innerHTML = cantLetrasMayus;
-    nletrasminuscant.innerHTML = cantLetrasMinus;
-    nnumscant.innerHTML = cantNumeros;
-    nsimboloscant.innerHTML = cantSimbolos;
-    nnumsentrecharscant.innerHTML = numsEntreChars;
-    reqscant.innerHTML = reqs;
+    interfaz.ncharcant.innerHTML = largoPwd;
+    interfaz.nletrasmayuscant.innerHTML = cantLetrasMayus;
+    interfaz.nletrasminuscant.innerHTML = cantLetrasMinus;
+    interfaz.nnumscant.innerHTML = cantNumeros;
+    interfaz.nsimboloscant.innerHTML = cantSimbolos;
+    interfaz.nnumsentrecharscant.innerHTML = numsEntreChars;
+    interfaz.reqscant.innerHTML = reqs;
 
     //---- Bonus:
-    ncharbonus.innerHTML = (bonuschars) ? "+ "+bonuschars : 0;    //en 4 amarillo, en 8 verde, en 12 azul
-    if( (bonuschars >= 4) && (bonuschars < 8)  ) ncharbonus.setAttribute("value","good"); 
-    else if((bonuschars >= 8)) ncharbonus.setAttribute("value","excep"); 
-    else ncharbonus.setAttribute("value","bad"); 
+    interfaz.ncharbonus.innerHTML = (bonuschars) ? "+ " + bonuschars : 0;    //en 4 amarillo, en 8 verde, en 12 azul
+    if( (bonuschars >= 4) && (bonuschars < 8)  ) interfaz.ncharbonus.setAttribute("value","good"); 
+    else if((bonuschars >= 8)) interfaz.ncharbonus.setAttribute("value","excep"); 
+    else interfaz.ncharbonus.setAttribute("value","bad"); 
 
-    nletrasmayusbonus.innerHTML = (bonusmayus) ? "+ "+bonusmayus : 0; // en 2 amarillo, en 4 verde, en 8 azul
-    if( (bonusmayus >= 4) && (bonusmayus < 8)  ) nletrasmayusbonus.setAttribute("value","good"); 
-    else if((bonusmayus >= 8) ) nletrasmayusbonus.setAttribute("value","excep"); 
-    else nletrasmayusbonus.setAttribute("value","bad"); 
+    interfaz.nletrasmayusbonus.innerHTML = (bonusmayus) ? "+ " + bonusmayus : 0; // en 2 amarillo, en 4 verde, en 8 azul
+    if( (bonusmayus >= 4) && (bonusmayus < 8)  ) interfaz.nletrasmayusbonus.setAttribute("value","good"); 
+    else if((bonusmayus >= 8) ) interfaz.nletrasmayusbonus.setAttribute("value","excep"); 
+    else interfaz.nletrasmayusbonus.setAttribute("value","bad"); 
 
-    nletrasminusbonus.innerHTML = (bonusminus) ? "+ "+bonusminus : 0; // en 2 amarillo, en 4 verde, en 8 azul
-    if( (bonusminus >= 2) && (bonusminus < 4)  ) nletrasminusbonus.setAttribute("value","good"); 
-    else if((bonusminus >= 4)) nletrasminusbonus.setAttribute("value","excep"); 
-    else nletrasminusbonus.setAttribute("value","bad"); 
+    interfaz.nletrasminusbonus.innerHTML = (bonusminus) ? "+ " + bonusminus : 0; // en 2 amarillo, en 4 verde, en 8 azul
+    if( (bonusminus >= 2) && (bonusminus < 4)  ) interfaz.nletrasminusbonus.setAttribute("value","good"); 
+    else if((bonusminus >= 4)) interfaz.nletrasminusbonus.setAttribute("value","excep"); 
+    else interfaz.nletrasminusbonus.setAttribute("value","bad"); 
 
-    nnumsbonus.innerHTML = (bonusnum) ? "+ "+bonusnum : 0;     //en 4 amarillo, 8 verde, 12 azul
-    if( (bonusnum >= 4) && (bonusnum < 8)  ) nnumsbonus.setAttribute("value","good"); 
-    else if((bonusnum >= 8)) nnumsbonus.setAttribute("value","excep"); 
-    else nnumsbonus.setAttribute("value","bad"); 
+    interfaz.nnumsbonus.innerHTML = (bonusnum) ? "+ " + bonusnum : 0;     //en 4 amarillo, 8 verde, 12 azul
+    if( (bonusnum >= 4) && (bonusnum < 8)  ) interfaz.nnumsbonus.setAttribute("value","good"); 
+    else if((bonusnum >= 8)) interfaz.nnumsbonus.setAttribute("value","excep"); 
+    else interfaz.nnumsbonus.setAttribute("value","bad"); 
 
-    nsimbolosbonus.innerHTML = (bonussim) ? "+ "+bonussim : 0; //en 6 amarillo, 12 verde, 18 azul
-    if( (bonussim >= 6) && (bonussim < 12)  ) nsimbolosbonus.setAttribute("value","good"); 
-    else if((bonussim >= 12) ) nsimbolosbonus.setAttribute("value","excep"); 
-    else nsimbolosbonus.setAttribute("value","bad"); 
+    interfaz.nsimbolosbonus.innerHTML = (bonussim) ? "+ " + bonussim : 0; //en 6 amarillo, 12 verde, 18 azul
+    if( (bonussim >= 6) && (bonussim < 12)  ) interfaz.nsimbolosbonus.setAttribute("value","good"); 
+    else if((bonussim >= 12) ) interfaz.nsimbolosbonus.setAttribute("value","excep"); 
+    else interfaz.nsimbolosbonus.setAttribute("value","bad"); 
 
-    nnumsentrecharsbonus.innerHTML = (bonusentrechars) ? "+ "+bonusentrechars : 0; // en 2 amarillo, 8 verde, 12 azul
-    if( (bonusentrechars >= 2) && (bonusentrechars < 8)  ) nnumsentrecharsbonus.setAttribute("value","good"); 
-    else if((bonusentrechars >= 8) ) nnumsentrecharsbonus.setAttribute("value","excep"); 
-    else nnumsentrecharsbonus.setAttribute("value","bad"); 
+    interfaz.nnumsentrecharsbonus.innerHTML = (bonusentrechars) ? "+ " + bonusentrechars : 0; // en 2 amarillo, 8 verde, 12 azul
+    if( (bonusentrechars >= 2) && (bonusentrechars < 8)  ) interfaz.nnumsentrecharsbonus.setAttribute("value","good"); 
+    else if((bonusentrechars >= 8) ) interfaz.nnumsentrecharsbonus.setAttribute("value","excep"); 
+    else interfaz.nnumsentrecharsbonus.setAttribute("value","bad"); 
 
-    reqsbonusdom.innerHTML = (reqsBonus) ? "+ "+reqsBonus : 0; //8 verde, 10 azul
-    if( (reqsBonus >= 4) && (reqsBonus < 8)  ) reqsbonusdom.setAttribute("value","good"); 
-    else if((reqsBonus >= 8) ) reqsbonusdom.setAttribute("value","excep"); 
-    else reqsbonusdom.setAttribute("value","bad"); 
+    interfaz.reqsbonusdom.innerHTML = (reqsBonus) ? "+ " + reqsBonus : 0; //8 verde, 10 azul
+    if( (reqsBonus >= 4) && (reqsBonus < 8)  ) interfaz.reqsbonusdom.setAttribute("value","good"); 
+    else if((reqsBonus >= 8) ) interfaz.reqsbonusdom.setAttribute("value","excep"); 
+    else interfaz.reqsbonusdom.setAttribute("value","bad"); 
 
     //------- Deducciones -------//
     //---- Cantidad:
-    sletrascant.innerHTML = sololetras;
-    snumeroscant.innerHTML = solonum;
-    repetidoscant.innerHTML = 0;
-    mayusconscant.innerHTML = consecMayus;
-    minusconscant.innerHTML = consecMinus;
-    numconscant.innerHTML = consecNums;
-    letraseccant.innerHTML = secuenciaLetras;
-    nseccant.innerHTML = secuenciaNumeros;
-    simseccant.innerHTML = secuenciaSimbolos;
+    interfaz.sletrascant.innerHTML = sololetras;
+    interfaz.snumeroscant.innerHTML = solonum;
+    interfaz.repetidoscant.innerHTML = 0;
+    interfaz.mayusconscant.innerHTML = consecMayus;
+    interfaz.minusconscant.innerHTML = consecMinus;
+    interfaz.numconscant.innerHTML = consecNums;
+    interfaz.letraseccant.innerHTML = secuenciaLetras;
+    interfaz.nseccant.innerHTML = secuenciaNumeros;
+    interfaz.simseccant.innerHTML = secuenciaSimbolos;
+    interfaz.repetidoscant.innerHTML = cantidadRepeticiones;
     
     //---- Deducción:
-    sletrasdeduct.innerHTML = (deductSoloLetras) ? "- " + deductSoloLetras : 0;
-    if((deductSoloLetras >= 1)) sletrasdeduct.setAttribute("value","bad"); 
-    else sletrasdeduct.setAttribute("value","good"); 
+    interfaz.sletrasdeduct.innerHTML = (deductSoloLetras) ? "- " + deductSoloLetras : 0;
+    if((deductSoloLetras >= 1)) interfaz.sletrasdeduct.setAttribute("value","bad"); 
+    else interfaz.sletrasdeduct.setAttribute("value","good"); 
+    
 
-    snumerosdeduct.innerHTML = (deductSoloNum) ? "- " + deductSoloNum : 0;
-    if((deductSoloNum >= 1)) snumerosdeduct.setAttribute("value","bad"); 
-    else snumerosdeduct.setAttribute("value","good"); 
-
-    repetidosdeduct.innerHTML = 0;
-
-
-    mayusconsdeduct.innerHTML = (deductMayusConsec) ? "- " + deductMayusConsec : 0;
-    if( (deductMayusConsec >= 4) && (deductMayusConsec < 8)  ) mayusconsdeduct.setAttribute("value","mild"); 
-    else if((deductMayusConsec >= 1)) mayusconsdeduct.setAttribute("value","bad"); 
-    else mayusconsdeduct.setAttribute("value","good"); 
+    interfaz.snumerosdeduct.innerHTML = (deductSoloNum) ? "- " + deductSoloNum : 0;
+    if((deductSoloNum >= 1)) interfaz.snumerosdeduct.setAttribute("value","bad"); 
+    else interfaz.snumerosdeduct.setAttribute("value","good"); 
 
 
-    minusconsdeduct.innerHTML = (deductMinusConsec) ? "- " + deductMinusConsec : 0;
-    if( (deductMinusConsec >= 2) && (deductMinusConsec < 12)  ) minusconsdeduct.setAttribute("value","mild"); 
-    else if((deductMinusConsec >= 12)) minusconsdeduct.setAttribute("value","bad"); 
-    else minusconsdeduct.setAttribute("value","good"); 
+    interfaz.repetidosdeduct.innerHTML = (deductRepeticiones) ? "- " + deductRepeticiones : 0;
+    if( (deductRepeticiones >= 2) && (deductRepeticiones < 12)  ) interfaz.repetidosdeduct.setAttribute("value","mild"); 
+    else if((deductRepeticiones >= 12)) interfaz.repetidosdeduct.setAttribute("value","bad"); 
+    else interfaz.repetidosdeduct.setAttribute("value","good"); 
 
 
-    numconsdeduct.innerHTML = (deductNumsConsec) ? "- " + deductNumsConsec : 0;
-    if( (deductNumsConsec >= 4) && (deductNumsConsec < 8)  ) numconsdeduct.setAttribute("value","mild"); 
-    else if((deductNumsConsec >= 8)) numconsdeduct.setAttribute("value","bad"); 
-    else numconsdeduct.setAttribute("value","good"); 
+    interfaz.mayusconsdeduct.innerHTML = (deductMayusConsec) ? "- " + deductMayusConsec : 0;
+    if( (deductMayusConsec >= 2) && (deductMayusConsec < 8)  ) interfaz.mayusconsdeduct.setAttribute("value","mild"); 
+    else if((deductMayusConsec >= 1)) interfaz.mayusconsdeduct.setAttribute("value","bad"); 
+    else interfaz.mayusconsdeduct.setAttribute("value","good"); 
 
 
-    letrasecdeduct.innerHTML = (deductLetrasSec) ? "- " + deductLetrasSec : 0;
-    if( (deductLetrasSec >= 3) && (deductLetrasSec < 6)  ) letrasecdeduct.setAttribute("value","mild"); 
-    else if((deductLetrasSec >= 6)) letrasecdeduct.setAttribute("value","bad"); 
-    else letrasecdeduct.setAttribute("value","good"); 
+    interfaz.minusconsdeduct.innerHTML = (deductMinusConsec) ? "- " + deductMinusConsec : 0;
+    if( (deductMinusConsec >= 2) && (deductMinusConsec < 12)  ) interfaz.minusconsdeduct.setAttribute("value","mild"); 
+    else if((deductMinusConsec >= 12)) interfaz.minusconsdeduct.setAttribute("value","bad"); 
+    else interfaz.minusconsdeduct.setAttribute("value","good"); 
 
 
-    nsecdeduct.innerHTML = (deductNumerosSec) ? "- " + deductNumerosSec : 0;
-    if( (deductNumerosSec >= 3) && (deductNumerosSec < 6)  ) nsecdeduct.setAttribute("value","mild"); 
-    else if((deductNumerosSec >= 6)) nsecdeduct.setAttribute("value","bad"); 
-    else nsecdeduct.setAttribute("value","good"); 
+    interfaz.numconsdeduct.innerHTML = (deductNumsConsec) ? "- " + deductNumsConsec : 0;
+    if( (deductNumsConsec >= 2) && (deductNumsConsec < 8)  ) interfaz.numconsdeduct.setAttribute("value","mild"); 
+    else if((deductNumsConsec >= 8)) interfaz.numconsdeduct.setAttribute("value","bad"); 
+    else interfaz.numconsdeduct.setAttribute("value","good"); 
 
 
-    simsecdeduct.innerHTML = (deductSimbolosSec) ? "- " + deductSimbolosSec : 0;
-    if( (deductSimbolosSec >= 3) && (deductSimbolosSec < 6)  ) simsecdeduct.setAttribute("value","mild"); 
-    else if((deductSimbolosSec >= 6)) simsecdeduct.setAttribute("value","bad"); 
-    else simsecdeduct.setAttribute("value","good");
+    interfaz.letrasecdeduct.innerHTML = (deductLetrasSec) ? "- " + deductLetrasSec : 0;
+    if( (deductLetrasSec >= 3) && (deductLetrasSec < 6)  ) interfaz.letrasecdeduct.setAttribute("value","mild"); 
+    else if((deductLetrasSec >= 6)) interfaz.letrasecdeduct.setAttribute("value","bad"); 
+    else interfaz.letrasecdeduct.setAttribute("value","good"); 
 
+
+    interfaz.nsecdeduct.innerHTML = (deductNumerosSec) ? "- " + deductNumerosSec : 0;
+    if( (deductNumerosSec >= 3) && (deductNumerosSec < 6)  ) interfaz.nsecdeduct.setAttribute("value","mild"); 
+    else if((deductNumerosSec >= 6)) interfaz.nsecdeduct.setAttribute("value","bad"); 
+    else interfaz.nsecdeduct.setAttribute("value","good"); 
+
+
+    interfaz.simsecdeduct.innerHTML = (deductSimbolosSec) ? "- " + deductSimbolosSec : 0;
+    if( (deductSimbolosSec >= 3) && (deductSimbolosSec < 6)  ) interfaz.simsecdeduct.setAttribute("value","mild"); 
+    else if((deductSimbolosSec >= 6)) interfaz.simsecdeduct.setAttribute("value","bad"); 
+    else interfaz.simsecdeduct.setAttribute("value","good");
+
+    //------- TOTAL -------//
+    interfaz.meter.value = total;
 
 }
