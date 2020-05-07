@@ -8,6 +8,9 @@ function init(){
     // --- variable para cálculo de tiempo de bruteforce:
     mellt = new Mellt();
 
+    //variable timer de manejo de la alerta
+    timer = 0;
+
     //interfaz del DOM
     interfaz = {
 
@@ -64,7 +67,10 @@ function init(){
         visibilidad : _get("visibleCheck"),
 
         //medidor
-        meter : _get("meter")
+        meter : _get("meter"),
+
+        //alerta
+        alert : _get("alert")
 }
 
     //seteo de página
@@ -72,20 +78,21 @@ function init(){
     let tema = window.localStorage.getItem("tema");
     if(!tema)
         window.localStorage.setItem("tema","white");
-    if(tema=="white"){
-        console.log("cambio a true");
-        document.getElementById("checkTema").checked = true;
-        toggleTema(true);
-    }else{
-        console.log("cambio a black");
+    else if(tema=="white"){
         document.getElementById("checkTema").checked = false;
-        toggleTema(false);
+        setTema(true);
+    }else{
+        document.getElementById("checkTema").checked = true;
+        setTema(false);
     }
 
     let userAgent = navigator.userAgent.toLowerCase();
     let android = userAgent.indexOf("android") > -1;
-    if(android){
+    if(android){            //fix en teléfonos
         document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
+        let mainContainer = document.getElementById("mainContainer");
+        mainContainer.style.setProperty("padding-left","0");
+        mainContainer.classList.add("adnroid-text");
     }
     console.log("User agent: "+ userAgent + " android: "+android);
 
@@ -110,13 +117,76 @@ function _get(id){
  * Intercambia los estilos entre modo normal y oscuro.
  * @param {boolean}   checked         Valor actual del checkbox, true >> white, false >> black.
 */
-function toggleTema(checked){
-    console.log(checked);
+function setTema(checked){
     if(checked){
         //aca seteo todos los estilos a blanco.
+        window.localStorage.setItem("tema","white");
+        document.body.classList.remove("dark");
+        document.getElementById("bloqueInfo").classList.remove("dark");
+        document.getElementById("bloquePassword").classList.remove("dark");
+        document.getElementById("bloqueMetricas").classList.remove("dark");
+        document.getElementById("titleContainer").classList.remove("dark");
+        document.getElementById("passwordPwd").classList.remove("dark");
+        document.getElementById("visibleCheck").classList.remove("dark");
+        titulos = document.getElementsByClassName("titleForm");
+        for(i = 0; i < titulos.length; i++) {
+            titulos[i].classList.remove("dark");
+        }
+
+        subtitulos = document.getElementsByClassName("subtitleForm");
+        for(i = 0; i < subtitulos.length; i++) {
+            subtitulos[i].classList.remove("dark");
+        }
+
+        gridsep = document.getElementsByClassName("grid-separator");
+        for(i = 0; i < gridsep.length; i++) {
+            gridsep[i].classList.remove("dark");
+        }
+
+        celdas = document.getElementsByClassName("celda");
+        for(i = 0; i < celdas.length; i++) {
+            celdas[i].classList.remove("dark");
+        }
+
+        bcontent = document.getElementsByClassName("basicContent");
+        for(i = 0; i < bcontent.length; i++) {
+            bcontent[i].classList.remove("dark");
+        }
     }
     else{
         //aca seteo todos los estilos a oscuro.
+        window.localStorage.setItem("tema","black");
+        document.body.classList.add("dark");
+        document.getElementById("bloqueInfo").classList.add("dark");
+        document.getElementById("bloquePassword").classList.add("dark");
+        document.getElementById("bloqueMetricas").classList.add("dark");
+        document.getElementById("titleContainer").classList.add("dark");
+        document.getElementById("passwordPwd").classList.add("dark");
+        document.getElementById("visibleCheck").classList.add("dark");
+        titulos = document.getElementsByClassName("titleForm");
+        for(i = 0; i < titulos.length; i++) {
+            titulos[i].classList.add("dark");
+        }
+
+        subtitulos = document.getElementsByClassName("subtitleForm");
+        for(i = 0; i < subtitulos.length; i++) {
+            subtitulos[i].classList.add("dark");
+        }
+
+        gridsep = document.getElementsByClassName("grid-separator");
+        for(i = 0; i < gridsep.length; i++) {
+            gridsep[i].classList.add("dark");
+        }
+
+        celdas = document.getElementsByClassName("celda");
+        for(i = 0; i < celdas.length; i++) {
+            celdas[i].classList.add("dark");
+        }
+
+        bcontent = document.getElementsByClassName("basicContent");
+        for(i = 0; i < bcontent.length; i++) {
+            bcontent[i].classList.add("dark");
+        }
     }
 }
 
@@ -384,8 +454,8 @@ function check(pwd){
     let solonum = ( (!cantLetrasMayus) && (!cantLetrasMinus) && (!cantSimbolos) ) ? largoPwd : 0;
 
     //Deducción total por categoría:
-    let deductSoloLetras = sololetras * 4;
-    let deductSoloNum = solonum * 4;
+    let deductSoloLetras = sololetras * 2;
+    let deductSoloNum = solonum * 2;
     let deductMayusConsec = consecMayus * 2;
     let deductMinusConsec = consecMinus * 2;
     let deductNumsConsec = consecNums * 2;
@@ -401,6 +471,10 @@ function check(pwd){
     //ajuste final de total
     if(total<0) total = 0;
     else if(total>100) total = 100;
+
+    //las contraseñas comunes son una falla grave de seguridad
+    if(daysToCrack == -1)
+        total = 0;
 
     /****** Impresión a usuario ******/
 
@@ -518,4 +592,37 @@ function check(pwd){
     //------- TOTAL -------//
     interfaz.meter.value = total;
 
+}
+
+/**
+ * Genera un archivo PDF utilizando los datos calculados en la página.
+ */
+function generarPdf(){
+    if(interfaz.pwdElem.value == ""){
+        toggleAlert(true);
+    }
+}
+
+/**
+ * Muestra o esconde la alerta por pantalla. Se agregó un timeout para mejorar la experiencia de usuario.
+ * @param {boolean} valor   true ==> muestra la alerta, false ==> esconde la alerta. 
+ */
+function toggleAlert(valor){
+    if(valor){
+        document.getElementById("alert").classList.remove("hidden");
+        interfaz.alert.children[0].classList.remove("hidden");
+        timer = setTimeout(function(){
+            interfaz.alert.classList.add("hidden");
+            setTimeout(function(){
+                interfaz.alert.children[0].classList.add("hidden");
+            },300);
+        },3500);
+    }
+    else{
+        clearTimeout(timer);
+        interfaz.alert.classList.add("hidden");
+        setTimeout(function(){
+            interfaz.alert.children[0].classList.add("hidden");
+        },300);
+    }
 }

@@ -12,12 +12,19 @@
     <title>pw-lizer</title>
   </head>
   <body onload="init()">
-    <div class="titleContainer">
+    <div id="titleContainer">
       <div class="switch">
-        <input type="checkbox" id="checkTema" onclick="toggleTema(checked)">
+        <input type="checkbox" id="checkTema" onclick="setTema(!checked)">
         <label><i></i></label>
       </div> 
       <h1 class="tituloPagina">pw-lizer</h1>
+      <img onclick="generarPdf()" class="pdf" src="css/images/pdf.png"/>
+
+    </div>
+
+    <div class="alert hidden" id="alert">
+      <span class="closebtn hidden" onclick="toggleAlert(false)">&times;</span> 
+      <strong>Error:</strong> Ingresá una contraseña para generar el PDF.
     </div>
 
     <div id="mainContainer" class="texto">
@@ -34,14 +41,13 @@
               </h2>
             </div>
   
-            <div id="containerInput" title="Este campo corresponde a la contraseña a ser analizada. Ver sección Requerimientos mínimos.">
+            <div class="celda" title="Este campo corresponde a la contraseña a ser analizada. Ver sección Requerimientos mínimos.">
               <div class="container inline">
                 <div>
                   <label>Password</label>
                 </div>
                 <div>
                   <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
-                  <!-- <input type="checkbox" name="visibleCheck" checked="false" id="visibleCheck" onchange="togglePwd(this.checked)" /> -->
                   <img id="visibleCheck" src="css/images/show.png" class="checkbox" onclick="togglePwd()"></img>
                 </div>
               </div>  
@@ -85,58 +91,58 @@
               <div class="grid-separator">Bonus</div>
               
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Número de caracteres que conforman la contraseña ingresada"
               >Número de caracteres</div>
-              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="celda grid-mid-mid">+(n*4)</div>
               <div class="grid-mid-mid center grid-separator" id="nchar-count">0</div>
               <div class="grid-right center white" id="nchar-bonus" value="bad">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras mayúsculas que posee la contraseña."
               >Letras mayúsculas</div>
-              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="celda grid-mid-mid">+((largo - n)*2)</div>
               <div class="grid-mid-mid center grid-separator" id="nletrasmayus-count">0</div>
               <div class="grid-right center white" id="nletrasmayus-bonus" value="bad">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras minúsculas que posee la contraseña."
               >Letras minúsculas</div>
-              <div class="grid-mid-mid">+((largo - n)*2)</div>
+              <div class="celda grid-mid-mid">+((largo - n)*2)</div>
               <div class="grid-mid-mid center grid-separator" id="nletrasminus-count">0</div>
               <div class="grid-right center white" id="nletrasminus-bonus" value="bad">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números que posee la contraseña."
               >números</div>
-              <div class="grid-mid-mid">+(n*4)</div>
+              <div class="celda grid-mid-mid">+(n*4)</div>
               <div class="grid-mid-mid center grid-separator" id="nnums-count">0</div>
               <div class="grid-right center white" id="nnums-bonus" value="bad">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos que posee la contraseña. Se entiende como símbolo a todo aquel caracterque no es ni una letra, ni un número."
               >Símbolos</div>
-              <div class="grid-mid-mid">+(n*6)</div>
+              <div class="celda grid-mid-mid">+(n*6)</div>
               <div class="grid-mid-mid center grid-separator" id="nsimbolos-count">0</div>
               <div class="grid-right center white" id="nsimbolos-bonus" value="bad">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números o símbolos que se encuentran entre otros caracteres, ejemplo: 'a1a', 'b!b' y '111'."
               >Números/símbolos entre caracteres</div>
-              <div class="grid-mid-mid">+(n*2)</div>
+              <div class="celda grid-mid-mid">+(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="nnumsentrechars-count">0</div>
               <div class="grid-right center white" id="nnumsentrechars-bonus" value="bad">0</div>
 
               <!-- <div class="grid-bottom-left-corner">img2</div> -->
-              <div class="descripcionMetrica zoom grid-bottom-mid"
+              <div class="celda descripcionMetrica zoom grid-bottom-mid"
               title="Cantidad de requerimientos cumplidos (ver sección Requerimientos Mínimos)."
               >Requerimientos</div>
-              <div class="grid-bottom-mid">+(n*2)</div>
+              <div class="celda grid-bottom-mid">+(n*2)</div>
               <div class="grid-bottom-mid center grid-separator" id="reqs-count">0</div>
               <div class="center grid-bottom-right-corner white" id="reqs-bonus" value="bad">0</div>
 
@@ -144,86 +150,76 @@
               <div id="deductions" class="grid-separator grid-title">Deducciones</div>
               
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
-              title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por letras.">Solo letras</div>
-              <div class="grid-mid-mid">-(n*4)</div>
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por letras."
+              >Solo letras</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="sololetras-count">0</div>
               <div class="grid-right center white" id="sololetras-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por números."
               >Solo números</div>
-              <div class="grid-mid-mid">-(n*4)</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="solonums-count">0</div>
               <div class="grid-right center white" id="solonums-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de caracteres repetidos que posee la contraseña. Es indiferente en cuanto a mayúsculas y minúsculas."
               >Caracteres repetidos</div>
-              <div class="grid-mid-mid">Compuesto</div>
+              <div class="celda grid-mid-mid">Compuesto</div>
               <div class="grid-mid-mid center grid-separator" id="repchars-count">0</div>
               <div class="grid-right center white" id="repchars-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras minúsculas consecutivas que posee la contraseña."
               >Letras mayúsculas consecutivas</div>
-              <div class="grid-mid-mid">-(n*2)</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="lmayusconsec-count">0</div>
               <div class="grid-right center white" id="lmayusconsec-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="cantidad de letras mayúsculas consecutivas que posee la contraseña."
               >Letras minúsculas consecutivas</div>
-              <div class="grid-mid-mid">-(n*2)</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator"  id="lminusconsec-count">0</div>
               <div class="grid-right center white"  id="lminusconsec-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números consecutivos que posee la contaseña."
               >Números consecutivos</div>
-              <div class="grid-mid-mid">-(n*2)</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
               <div class="grid-mid-mid center grid-separator" id="numsconsec-count">0</div>
               <div class="grid-right center white" id="numsconsec-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo 'abcde' son 5 letras en secuencia."
               >Letras en secuencia (3+)</div>
-              <div class="grid-mid-mid">-(n*3)</div>
+              <div class="celda grid-mid-mid">-(n*3)</div>
               <div class="grid-mid-mid center grid-separator" id="letrassecuencia-count">0</div>
               <div class="grid-right center white" id="letrassecuencia-deduct" value="good">0</div>
 
               <!-- <div class="grid-left-side">img1</div> -->
-              <div class="descripcionMetrica zoom grid-mid-mid"
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '12345' son 5 números en secuencia."
               >Números en secuencia (3+)</div>
-              <div class="grid-mid-mid">-(n*3)</div>
+              <div class="celda grid-mid-mid">-(n*3)</div>
               <div class="grid-mid-mid center grid-separator"  id="numssecuencia-count">0</div>
               <div class="grid-right center white"  id="numssecuencia-deduct" value="good">0</div>
 
               <!-- <div class="grid-bottom-left-corner">img2</div> -->
-              <div class="descripcionMetrica zoom grid-bottom-mid"
+              <div class="celda descripcionMetrica zoom grid-bottom-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '()*' son 3 símbolos en secuencia."
               >Símbolos en secuencia (3+)</div>
-              <div class="grid-bottom-mid">-(n*3)</div>
+              <div class="celda grid-bottom-mid">-(n*3)</div>
               <div class="grid-bottom-mid center grid-separator" id="simbolossecuencia-count">0</div>
               <div class="center grid-bottom-right-corner white" id="simbolossecuencia-deduct" value="good">0</div>
-
-              <!-- ***** deducciones ***** -->
-              <div id="varios" class="grid-separator grid-title">Varios</div>
-              <div class="center grid-double grid-separator">Bonus</div>
-
-              <!-- <div class="grid-bottom-left-corner">img2</div> -->
-              <div class="descripcionMetrica zoom grid-bottom-mid"
-              title="Variedad de caracteres que dispone la contraseña, por ejemplo una cadena poco variada sería 'abcg1221', caracteres muy juntos en el teclado."
-              >Variedad de Caracteres</div>
-              <div class="grid-bottom-mid">Compuesto</div>
-              <div class="grid-double center grid-bottom-right-corner white" id="variedad-bonus" value="mild">0</div>
 
             </div>
 

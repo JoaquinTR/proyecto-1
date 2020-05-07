@@ -1,9 +1,11 @@
 @import url(fonts/simplifica/stylesheet.css);
 
 :root{
+    --color-white: #e6e6e6;
     --color-black: #0B0C10;
     --color-blue: #1F2833;
     --color-grey: #C5C6C7;
+    --color-dgrey:rgb(154, 156, 158);
     --color-lgreen: #66FCF1;
     --color-dgreen: #45A29E;
     --color-title-green: #4CAF50;
@@ -21,13 +23,20 @@ div.sticky {
     font-size: 25px;
 }
 
-.android-text{
+.texto.android-text{
     font-family: simplificasimplifica;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 15px !important;
 }
 
-div.titleContainer{
+.pdf{
+    height: 50px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+#titleContainer{
     -webkit-box-shadow: 0px -1px 22px 0px #000000; 
     box-shadow: 0px -1px 22px 0px #000000;
     width: 100%;
@@ -35,6 +44,10 @@ div.titleContainer{
     background-color: var(--color-blue);
     border-bottom: 2px solid var(--color-dgreen);
     color: var(--color-lgreen);
+}
+#titleContainer.dark{
+    -webkit-box-shadow: 0px -1px 22px 0px rgba(255, 255, 255, 0.19) !important; 
+    box-shadow: 0px -1px 22px 0px rgba(255, 255, 255, 0.19) !important;
 }
 
 .tituloPagina{
@@ -51,7 +64,11 @@ body{
     margin-right: 0px;
     margin-top: 0px;
     height: 100%;
-    background-color: var(--color-grey);
+    background-color: var(--color-dgrey);
+}
+
+body.dark{
+    background-color: #121212 !important;
 }
 
 #mainContainer{
@@ -59,10 +76,20 @@ body{
     padding-left: 15%;/* EXPERIMENTAL */
 }
 
-input{
+#visibleCheck{
+    border-bottom: 2px solid var(--color-black);
+}
+#visibleCheck.dark{
+    border-bottom: 2px solid var(--color-white);
+}
+
+#passwordPwd{
     background-color: transparent;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid var(--color-black);
+}
+#passwordPwd.dark{
+    border-bottom: 2px solid var(--color-white);
 }
 
 #bloquePassword{
@@ -72,6 +99,9 @@ input{
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
     float: left;
     z-index: 1;
+}
+#bloquePassword.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
 }
 
 .checkbox{
@@ -85,16 +115,27 @@ input{
     background-color: var(--color-title-green) !important;
     padding: 0.01em 16px;
 }
+.titleForm.dark{
+    background-color: #102A43 !important;
+}
 
 .subtitleForm{
     padding: 0.01em 16px;
+    background-color: var(--color-dgrey) !important;
+}
+.subtitleForm.dark{
+    background-color: #006e63 !important;
 }
 
 .basicContent{
-    background-color: white;
+    background-color: var(--color-grey);
     font-size: 20px;
     padding: 5px;
     padding-left: 0px;
+}
+.basicContent.dark{
+    background-color: rgb(59, 68, 77);
+    color: var(--color-white);
 }
 
 meter {
@@ -107,6 +148,7 @@ meter {
     background: #EEE;
     box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
     border-radius: 3px;
+    border: solid var(--color-black) 1px;
 }
   
   /* WebKit */
@@ -162,11 +204,6 @@ h2{
 
 h3{
     margin: 10px 0;
-    background-color: var(--color-grey);
-}
-
-#containerInput{
-    background-color: white;
 }
 
 div.container{
@@ -196,6 +233,9 @@ div.container{
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
     float: left;
 }
+#bloqueInfo.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
 
 #bloqueMetricas{
     margin: 0.01em 16px;
@@ -203,6 +243,9 @@ div.container{
     margin-bottom: 10px;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
     float: left;
+}
+#bloqueMetricas.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
 }
 
 .grid-container{
@@ -221,13 +264,21 @@ div.container{
     transition: transform .2s;
 }
 
+.celda{
+    background-color: var(--color-grey);
+}
+.celda.dark{
+    background-color: rgb(59, 68, 77);
+    color: var(--color-white);
+}
+
 .zoom{
     transition: transform .2s;
     z-index: 0;
 }
 
 .zoom:hover{
-    transform: scale(1.01);
+    transform: scale(1.02);
 }
 
 #additions{
@@ -235,8 +286,12 @@ div.container{
 }
 
 .grid-separator{
-    background-color: var(--color-blue);
-    color: white;
+    background-color: var(--color-blue) !important;
+    color: var(--color-white);
+}
+
+.grid-separator.dark{
+    background-color: #1F1A24 !important;
 }
 
 .grid-title{
@@ -255,6 +310,7 @@ div.container{
 }
 
 .grid-mid-mid{
+    border-left: solid 1px grey;
     border-right: solid 1px grey;
     border-bottom: solid 1px grey;
 }
@@ -262,6 +318,7 @@ div.container{
 .grid-bottom-mid{
     border-right: solid 1px grey;
     border-bottom: solid 1px gray;
+    border-left: solid 1px grey;
 }
 
 .grid-right{
@@ -318,7 +375,7 @@ div[value="excep"]{
 }
 
 .white{
-    color: rgb(230, 230, 230);
+    color: var(--color-white);
     font-weight: bold;
 }
 
@@ -354,61 +411,11 @@ div[value="excep"]{
     width: 100%;
     height: 100%;
     position: relative;
-    background: black;
+    background: var(--color-black);
     border-radius: 40px;
     box-shadow:
         inset 0 3px 8px 1px rgba(0,0,0,0.2),
         0 1px 0 rgba(255,255,255,0.5);
-}
-
-.switch label:after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: -8px; right: -8px; bottom: -8px; left: -8px;
-    border-radius: inherit;
-    background: #ccc; /* Fallback */
-    background: linear-gradient(#f2f2f2, #ababab);
-    box-shadow: 0 0 10px rgba(0,0,0,0.3),
-        0 1px 1px rgba(0,0,0,0.25);
-}
-
-.switch label:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: -18px; right: -18px; bottom: -18px; left: -18px;
-    border-radius: inherit;
-    background: #eee; /* Fallback */
-    background: linear-gradient(#e5e7e6, #eee);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-    -webkit-filter: blur(1px); /* Smooth trick */
-    filter: blur(1px); /* Future-proof */
-}
-
-.switch label i:after {
-    content: "";
-    position: absolute;
-    left: 15%;
-    top: 25%;
-    width: 70%;
-    height: 50%;
-    background: #d2cbc3; /* Fallback */
-    background: linear-gradient(#cbc7bc, #d2cbc3);
-    border-radius: inherit;
-}
-
-.switch label:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: -18px; right: -18px; bottom: -18px; left: -18px;
-    border-radius: inherit;
-    background: #eee; /* Fallback */
-    background: linear-gradient(#e5e7e6, #eee);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-    -webkit-filter: blur(1px); /* Smooth trick */
-    filter: blur(1px); /* Future-proof */
 }
 
 .switch label i {
@@ -423,7 +430,7 @@ div[value="excep"]{
     background: #b2ac9e; /* Fallback */
     background: linear-gradient(#f3f2f7, var(--color-blue));
     box-shadow:
-        inset 0 1px 0 white,
+        inset 0 1px 0 var(--color-white),
         0 0 8px rgba(0,0,0,0.3),
         0 5px 5px rgba(0,0,0,0.2);
 }
@@ -456,7 +463,7 @@ div[value="excep"]{
 }
 
 .switch input:checked ~ label { /* Background */
-    background: white;
+    background: var(--color-white);
 }
 
 .switch input:checked ~ label i { /* Toggle */
@@ -467,5 +474,47 @@ div[value="excep"]{
 .switch input:checked ~ label i:before { /* On/off */
     content: "white";
     right: 105%;
+    color: var(--color-black);
+}
+
+/* mensaje de error al querer generar pdf con password vacío*/
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: var(--color-white);
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    text-align: center;
+    font-family: simplificasimplifica;
+    font-size: 25px;
+    position: absolute;
+    float: left;
+    left: 5%;
+    right: 5%;
+    z-index: 100;
+    transition: 0.3s;
+}
+.alert.hidden{
+    opacity: 0;
+    transition: 0.3s;
+}
+  
+.closebtn {
+    color: var(--color-white);
+    font-weight: bold;
+    float: right;
+    font-size: 30px;
+    line-height: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn.hidden{
+    display: none;
+}
+  
+.closebtn:hover {
     color: black;
 }
