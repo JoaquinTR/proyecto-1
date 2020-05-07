@@ -119,6 +119,7 @@ function _get(id){
 */
 function setTema(checked){
     if(checked){
+        document.getElementById("modeIcon").setAttribute("src","css/images/dark.png"); //ícono
         //aca seteo todos los estilos a blanco.
         window.localStorage.setItem("tema","white");
         document.body.classList.remove("dark");
@@ -154,6 +155,7 @@ function setTema(checked){
         }
     }
     else{
+        document.getElementById("modeIcon").setAttribute("src","css/images/bright.png"); //ícono
         //aca seteo todos los estilos a oscuro.
         window.localStorage.setItem("tema","black");
         document.body.classList.add("dark");
