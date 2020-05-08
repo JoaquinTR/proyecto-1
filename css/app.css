@@ -2,6 +2,7 @@
 
 :root{
     --color-subtitle-dark: #00695f;
+    --color-white-extra: #f7f7f7;
     --color-white: #e6e6e6;
     --color-black: #0B0C10;
     --color-blue: #1F2833;
@@ -65,7 +66,7 @@ body{
     margin-right: 0px;
     margin-top: 0px;
     height: 100%;
-    background-color: var(--color-dgrey);
+    background-color: var(--color-white-extra);
 }
 
 body.dark{
@@ -75,13 +76,6 @@ body.dark{
 #mainContainer{
     background: transparent;
     padding-left: 15%;/* EXPERIMENTAL */
-}
-
-#visibleCheck{
-    border-bottom: 2px solid var(--color-black);
-}
-#visibleCheck.dark{
-    border-bottom: 2px solid var(--color-white);
 }
 
 #passwordPwd{
@@ -348,7 +342,7 @@ div[mellt="bad"]{
 }
 
 div[mellt="mild"]{
-    color: rgb(158, 155, 0);
+    color: #9e9b00;
 }
 
 div[mellt="good"]{

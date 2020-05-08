@@ -75,7 +75,7 @@ function init(){
 
     //seteo de página
     //white/dark mode, inicializador. posiblemente innecesario!
-    let tema = window.localStorage.getItem("tema");
+    tema = window.localStorage.getItem("tema");
     if(!tema)
         window.localStorage.setItem("tema","white");
     else if(tema=="white"){
@@ -115,7 +115,7 @@ function _get(id){
 
 /** 
  * Intercambia los estilos entre modo normal y oscuro.
- * @param {boolean}   checked         Valor actual del checkbox, true >> white, false >> black.
+ * @param {boolean}   checked         Valor actual del checkbox, true >> pasa a white, false >> pasa a dark.
 */
 function setTema(checked){
     if(checked){
@@ -128,7 +128,12 @@ function setTema(checked){
         document.getElementById("bloqueMetricas").classList.remove("dark");
         document.getElementById("titleContainer").classList.remove("dark");
         document.getElementById("passwordPwd").classList.remove("dark");
-        document.getElementById("visibleCheck").classList.remove("dark");
+        let visible = document.getElementById("visibleCheck");
+        visible.classList.remove("dark");
+        if(visible.getAttribute("src") == "css/images/show-dark.png")
+            visible.setAttribute("src","css/images/show.png");
+        else if(visible.getAttribute("src") == "css/images/hide-dark.png")
+            visible.setAttribute("src","css/images/hide.png");
         titulos = document.getElementsByClassName("titleForm");
         for(i = 0; i < titulos.length; i++) {
             titulos[i].classList.remove("dark");
@@ -164,7 +169,14 @@ function setTema(checked){
         document.getElementById("bloqueMetricas").classList.add("dark");
         document.getElementById("titleContainer").classList.add("dark");
         document.getElementById("passwordPwd").classList.add("dark");
-        document.getElementById("visibleCheck").classList.add("dark");
+        
+        let visible = document.getElementById("visibleCheck");
+        visible.classList.add("dark");
+        if(visible.getAttribute("src") == "css/images/show.png")
+            visible.setAttribute("src","css/images/show-dark.png");
+        else
+            visible.setAttribute("src","css/images/hide-dark.png");
+            
         titulos = document.getElementsByClassName("titleForm");
         for(i = 0; i < titulos.length; i++) {
             titulos[i].classList.add("dark");
@@ -194,17 +206,19 @@ function setTema(checked){
 
 
 /**
- * Intercambia la visibilidad del campo contraseña.
+ * Intercambia la visibilidad del campo contraseña. Contempla el tema actual seleccionado.
 */
 function togglePwd(){
     
     if (interfaz.pwdElem.type === 'text') {
-        interfaz.pwdElem.type = 'password'
-        interfaz.visibilidad.setAttribute("src","css/images/show.png")
+        interfaz.pwdElem.type = 'password';
+        (window.localStorage.getItem("tema")=="white") ? interfaz.visibilidad.setAttribute("src","css/images/show.png")
+            : interfaz.visibilidad.setAttribute("src","css/images/show-dark.png");
     }
     else{
         interfaz.pwdElem.type = 'text';
-        interfaz.visibilidad.setAttribute("src","css/images/hide.png")
+        (window.localStorage.getItem("tema")=="white") ? interfaz.visibilidad.setAttribute("src","css/images/hide.png")
+            : interfaz.visibilidad.setAttribute("src","css/images/hide-dark.png")
     }
     
 }
@@ -236,7 +250,6 @@ function check(pwd){
     let secuenciaLetras = 0;
     let secuenciaNumeros = 0;
     let secuenciaSimbolos = 0;
-    let cantCharRepetidos = 0;          //dbería contalizar la cantidad de caracteres totales en algún tipo de "mapeo"
 
     //aux
     let cantidadAnalizada = 0;
@@ -390,7 +403,7 @@ function check(pwd){
     //automáticamente se pasan a años en caso de superar los 365 días
 
     var daysToCrack = mellt.CheckPassword(interfaz.pwdElem.value); //tiempo necesario de crackeo en base al análisis propuesto por Mellt.
-    if(daysToCrack == -1){
+    if(daysToCrack == -1){  //contraseña común/obvia
         interfaz.bruteforceElem.innerHTML = "Dentro de las más comunes";
         interfaz.bruteforceElem.setAttribute("mellt","bad");
     }
@@ -464,13 +477,19 @@ function check(pwd){
     let deductLetrasSec = secuenciaLetras * 3;
     let deductNumerosSec = secuenciaNumeros * 3;
     let deductSimbolosSec = secuenciaSimbolos * 3;
-    console.log(cantidadRepeticiones, largoPwd, largoPwd/2)
-    let deductRepeticiones = 0;
 
+    //caracteres repetidos, si la cantidad de caracteres repetidos supera la mitad de la contraseña
+    //entonces peno la seguridad multiplicando por dos el cálculo de deducción, caso contrario lo dejo como está
+    let diferencial = largoPwd - cantidadRepeticiones;
+    let deductRepeticiones = (cantidadRepeticiones) ? (largoPwd/((diferencial)+1))*2 : 0;
+    if(diferencial > largoPwd/2) deductRepeticiones /=2;
+    deductRepeticiones = Math.round(deductRepeticiones);
+
+    console.log(cantidadRepeticiones, largoPwd, diferencial, deductRepeticiones);
     //deducciones al total
     total -= deductSoloLetras + deductSoloNum + deductMayusConsec + deductMinusConsec + deductNumsConsec + deductLetrasSec + deductNumerosSec + deductSimbolosSec + deductRepeticiones;
 
-    //ajuste final de total
+    //------- Ajuste final de total -------//
     if(total<0) total = 0;
     else if(total>100) total = 100;
 
@@ -492,8 +511,8 @@ function check(pwd){
 
     //---- Bonus:
     interfaz.ncharbonus.innerHTML = (bonuschars) ? "+ " + bonuschars : 0;    //en 4 amarillo, en 8 verde, en 12 azul
-    if( (bonuschars >= 4) && (bonuschars < 8)  ) interfaz.ncharbonus.setAttribute("value","good"); 
-    else if((bonuschars >= 8)) interfaz.ncharbonus.setAttribute("value","excep"); 
+    if( (bonuschars >= 4) && (bonuschars < 12)  ) interfaz.ncharbonus.setAttribute("value","good"); 
+    else if((bonuschars >= 12)) interfaz.ncharbonus.setAttribute("value","excep"); 
     else interfaz.ncharbonus.setAttribute("value","bad"); 
 
     interfaz.nletrasmayusbonus.innerHTML = (bonusmayus) ? "+ " + bonusmayus : 0; // en 2 amarillo, en 4 verde, en 8 azul
@@ -596,14 +615,7 @@ function check(pwd){
 
 }
 
-/**
- * Genera un archivo PDF utilizando los datos calculados en la página.
- */
-function generarPdf(){
-    if(interfaz.pwdElem.value == ""){
-        toggleAlert(true);
-    }
-}
+//***** Generación de PDF *****/
 
 /**
  * Muestra o esconde la alerta por pantalla. Se agregó un timeout para mejorar la experiencia de usuario.
@@ -627,4 +639,15 @@ function toggleAlert(valor){
             interfaz.alert.children[0].classList.add("hidden");
         },300);
     }
+}
+
+/**
+ * Genera un archivo PDF utilizando los datos calculados en la página.
+ */
+function generarPdf(){
+    if(interfaz.pwdElem.value == ""){   //si no tengo nada cargado en la contraseña lanzo la alerta
+        toggleAlert(true);
+        return;
+    }
+
 }
