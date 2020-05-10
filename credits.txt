@@ -1,5 +1,7 @@
-Melt: https://github.com/ravisorg/Mellt/tree/master/javascript
-Plantilla: http://www.passwordmeter.com/ 
-generar un reporte en pdf en base a los resultados
-
-ideas: Hacer que al cambiar de tema los colores tansicionen, en lugar de saltar de un color al otro.
+Página de inspiración:
+    * Plantilla: http://www.passwordmeter.com/
+Cálculo de bruteforce
+    * Melt: https://github.com/ravisorg/Mellt/tree/master/javascript
+Generación de reporte:
+    * Generador de pdf: http://pdfmake.org
+    * Playground (sitio de pruebas): http://pdfmake.org/playground.html

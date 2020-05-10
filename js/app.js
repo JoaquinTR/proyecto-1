@@ -91,7 +91,6 @@ function init(){
     if(android){            //fix en teléfonos
         document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
         let mainContainer = document.getElementById("mainContainer");
-        mainContainer.style.setProperty("padding-left","0");
         mainContainer.classList.add("adnroid-text");
     }
     console.log("User agent: "+ userAgent + " android: "+android);
@@ -650,4 +649,152 @@ function generarPdf(){
         return;
     }
 
+    let colorBruteforce;
+    let computedColor = interfaz.bruteforceElem.getAttribute("mellt");
+    if(computedColor == "bad")
+        colorBruteforce = "red"
+    else if(computedColor == "mild")
+        colorBruteforce = "orange"
+    else if(computedColor == "good")
+        colorBruteforce = "green"
+    else
+        colorBruteforce = "blue"
+
+    let valorFinal = document.getElementById("meter").getAttribute("value");
+    let colorValor;
+    if(valorFinal < 25)
+        colorValor = "red";
+    else if(valorFinal>=25 && valorFinal<75)
+        colorValor = "orange";
+    else
+        colorValor = "green"
+
+    let docDefinition = {
+        
+        info: {
+            title: 'Reporte de seguridad'
+        },
+        content: [
+            {text: 'PW-LIZER', style: 'header', link: 'https://joaquintr.github.io/proyecto-1/'},
+            {
+                columns:[
+                    {width:'*', text: 'Tiempo Bruteforce'},
+                    {width:'*', text: interfaz.bruteforceElem.innerHTML, color: colorBruteforce }
+                ],
+                columnGap: 10
+            },
+            {
+                columns:[
+                    {width:'*', text: 'Puntaje de seguridad'},
+                    {width:'*', text: document.getElementById("meter").getAttribute("value")+"/100", color: colorValor }
+                ],
+                columnGap: 10
+            },
+            {text: 'Métricas', style: 'subheader'},
+            {
+                style: 'table',
+                table: {
+                    widths: [250,75],
+                    body: [
+                        [
+                            {text:'Descripción', fillColor: '#1F2833', alignment: 'left', color:'white', border: [false,false,false,true]},
+                            {text:'Bonus', fillColor: '#1F2833', color:'white', border: [false,false,false,true]}
+                        ],
+                        [
+                            {text: 'Número de caracteres', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.ncharbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Letras mayúsculas', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nletrasmayusbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Lentras minúsculas', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nletrasminusbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Números', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nnumsbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Símbolos', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nsimbolosbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Números/símbolos entre caracteres', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nnumsentrecharsbonus.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Requerimientos', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.reqsbonusdom.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {height: '10px',text: '',  fillColor: 'black', border:[false,false,false,false]},
+                            {text: '', fillColor: 'black', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Solo letras', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.sletrasdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Solo números', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.snumerosdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Caracteres repetidos', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.repetidosdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Letras mayúsculas consecutivas', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.mayusconsdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Letras minúsculas consecutivas', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.minusconsdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Números consecutivos', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.numconsdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Letras en secuencia (3+)', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.letrasecdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Números en secuencia (3+)', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.nsecdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ],
+                        [
+                            {text: 'Símbolos en secuencia (3+)', alignment: 'left', border:[false,false,false,false]},
+                            {text: interfaz.simsecdeduct.innerHTML, alignment: 'center', border:[false,false,false,false]}
+                        ]
+                    ]
+                },
+                layout: {
+                    fillColor: function (rowIndex, node, columnIndex) {
+                        return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+                    }
+                }
+            },
+        ],
+        styles: {
+            header: {
+                fontSize: 18,
+                bold: true,
+                margin: [0, 0, 0, 10],
+                alignment: 'center'
+            },
+            subheader: {
+                fontSize: 16,
+                bold: true,
+                margin: [0, 10, 0, 5]
+            },
+            table: {
+                margin: [0, 5, 10, 15]
+            }
+        }
+    };
+
+    // download the PDF
+    pdfMake.createPdf(docDefinition).download('pw-lizer-results.pdf');
 }

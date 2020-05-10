@@ -75,7 +75,8 @@ body.dark{
 
 #mainContainer{
     background: transparent;
-    padding-left: 15%;/* EXPERIMENTAL */
+    display: flex;
+    justify-content: center;
 }
 
 #passwordPwd{
@@ -338,7 +339,7 @@ div.container{
 }
 
 div[mellt="bad"]{
-    color: red;
+    color: #ff0000;
 }
 
 div[mellt="mild"]{
