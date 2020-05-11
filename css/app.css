@@ -425,10 +425,12 @@ div[value="excep"]{
     left: 5%;
     right: 5%;
     z-index: 100;
-    transition: 0.3s;
 }
 .alert.hidden{
     opacity: 0;
+}
+
+.transition {
     transition: 0.3s;
 }
   

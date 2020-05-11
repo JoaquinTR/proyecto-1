@@ -1,3 +1,15 @@
+//seteo de página estilo de página, está fuera del init para prevenir anomalías visuales.
+tema = window.localStorage.getItem("tema");
+if(!tema)
+    window.localStorage.setItem("tema","white");
+else if(tema=="white"){
+    document.getElementById("checkTema").checked = false;
+    setTema(true);
+}else{
+    document.getElementById("checkTema").checked = true;
+    setTema(false);
+}
+
 
 /**
  * Función de inicialización de la página. Se encarga de setear las variables globales y de 
@@ -73,19 +85,6 @@ function init(){
         alert : _get("alert")
 }
 
-    //seteo de página
-    //white/dark mode, inicializador. posiblemente innecesario!
-    tema = window.localStorage.getItem("tema");
-    if(!tema)
-        window.localStorage.setItem("tema","white");
-    else if(tema=="white"){
-        document.getElementById("checkTema").checked = false;
-        setTema(true);
-    }else{
-        document.getElementById("checkTema").checked = true;
-        setTema(false);
-    }
-
     let userAgent = navigator.userAgent.toLowerCase();
     let android = userAgent.indexOf("android") > -1;
     if(android){            //fix en teléfonos
@@ -95,12 +94,38 @@ function init(){
     }
     //console.log("User agent: "+ userAgent + " android: "+android);
 
-    /*de ultima intentar usar .androidText:
-    var htmlEl = document.getElementsByClassName('my-nice-class'); 
-    y hacer un for each con estas instrucciones
-    htmlEl.classList.add("my-nice-class--dimensions_B");
-    htmlEl.classList.remove("my-nice-class--dimensions_A");
+    //fix problema de transición al recargar la página, se disparaba siempre la transición, esto evita que suceda
+    document.getElementById("alert").classList.add("transition");
+    document.body.classList.add("transition");
+    document.getElementById("bloqueInfo").classList.add("transition");
+    document.getElementById("bloquePassword").classList.add("transition");
+    document.getElementById("bloqueMetricas").classList.add("transition");
+    document.getElementById("titleContainer").classList.add("transition");
+    document.getElementById("passwordPwd").classList.add("transition");
+
+    /*
+     * Las variables de estos for ya están cargadas (en la función setTema), lo deje así para ahorrar tiempo de ejecución
+     * al no tener que ir a buscar otra vez todos los componentes (ahorro un recorrido del DOM).
     */
+    for(i = 0; i < titulos.length; i++) {
+        titulos[i].classList.add("transition");
+    }
+
+    for(i = 0; i < subtitulos.length; i++) {
+        subtitulos[i].classList.add("transition");
+    }
+
+    for(i = 0; i < gridsep.length; i++) {
+        gridsep[i].classList.add("transition");
+    }
+
+    for(i = 0; i < celdas.length; i++) {
+        celdas[i].classList.add("transition");
+    }
+    
+    for(i = 0; i < bcontent.length; i++) {
+        bcontent[i].classList.add("transition");
+    }
 }
 
 /** 
@@ -117,89 +142,57 @@ function _get(id){
  * @param {boolean}   checked         Valor actual del checkbox, true >> pasa a white, false >> pasa a dark.
 */
 function setTema(checked){
+    let visible = document.getElementById("visibleCheck");  //el ícono de mostrar/esconder contraseña
+
     if(checked){
-        document.getElementById("modeIcon").setAttribute("src","css/images/dark.png"); //ícono
-        //aca seteo todos los estilos a blanco.
-        window.localStorage.setItem("tema","white");
-        document.body.classList.remove("dark");
-        document.getElementById("bloqueInfo").classList.remove("dark");
-        document.getElementById("bloquePassword").classList.remove("dark");
-        document.getElementById("bloqueMetricas").classList.remove("dark");
-        document.getElementById("titleContainer").classList.remove("dark");
-        document.getElementById("passwordPwd").classList.remove("dark");
-        let visible = document.getElementById("visibleCheck");
-        visible.classList.remove("dark");
         if(visible.getAttribute("src") == "css/images/show-dark.png")
             visible.setAttribute("src","css/images/show.png");
         else if(visible.getAttribute("src") == "css/images/hide-dark.png")
             visible.setAttribute("src","css/images/hide.png");
-        titulos = document.getElementsByClassName("titleForm");
-        for(i = 0; i < titulos.length; i++) {
-            titulos[i].classList.remove("dark");
-        }
-
-        subtitulos = document.getElementsByClassName("subtitleForm");
-        for(i = 0; i < subtitulos.length; i++) {
-            subtitulos[i].classList.remove("dark");
-        }
-
-        gridsep = document.getElementsByClassName("grid-separator");
-        for(i = 0; i < gridsep.length; i++) {
-            gridsep[i].classList.remove("dark");
-        }
-
-        celdas = document.getElementsByClassName("celda");
-        for(i = 0; i < celdas.length; i++) {
-            celdas[i].classList.remove("dark");
-        }
-
-        bcontent = document.getElementsByClassName("basicContent");
-        for(i = 0; i < bcontent.length; i++) {
-            bcontent[i].classList.remove("dark");
-        }
     }
     else{
-        document.getElementById("modeIcon").setAttribute("src","css/images/bright.png"); //ícono
-        //aca seteo todos los estilos a oscuro.
-        window.localStorage.setItem("tema","black");
-        document.body.classList.add("dark");
-        document.getElementById("bloqueInfo").classList.add("dark");
-        document.getElementById("bloquePassword").classList.add("dark");
-        document.getElementById("bloqueMetricas").classList.add("dark");
-        document.getElementById("titleContainer").classList.add("dark");
-        document.getElementById("passwordPwd").classList.add("dark");
-        
-        let visible = document.getElementById("visibleCheck");
-        visible.classList.add("dark");
         if(visible.getAttribute("src") == "css/images/show.png")
             visible.setAttribute("src","css/images/show-dark.png");
         else
             visible.setAttribute("src","css/images/hide-dark.png");
-            
-        titulos = document.getElementsByClassName("titleForm");
-        for(i = 0; i < titulos.length; i++) {
-            titulos[i].classList.add("dark");
-        }
+    }
 
-        subtitulos = document.getElementsByClassName("subtitleForm");
-        for(i = 0; i < subtitulos.length; i++) {
-            subtitulos[i].classList.add("dark");
-        }
+    visible.classList.toggle("dark", !checked);
+    
+    document.getElementById("modeIcon").setAttribute("src",(checked) ? "css/images/dark.png" : "css/images/bright.png"); //ícono de modo
+    window.localStorage.setItem("tema",(checked) ? "white" : "black");
 
-        gridsep = document.getElementsByClassName("grid-separator");
-        for(i = 0; i < gridsep.length; i++) {
-            gridsep[i].classList.add("dark");
-        }
+    //reacomodo los estilos
+    document.body.classList.toggle("dark", !checked);
+    document.getElementById("bloqueInfo").classList.toggle("dark", !checked);
+    document.getElementById("bloquePassword").classList.toggle("dark", !checked);
+    document.getElementById("bloqueMetricas").classList.toggle("dark", !checked);
+    document.getElementById("titleContainer").classList.toggle("dark", !checked);
+    document.getElementById("passwordPwd").classList.toggle("dark", !checked);
 
-        celdas = document.getElementsByClassName("celda");
-        for(i = 0; i < celdas.length; i++) {
-            celdas[i].classList.add("dark");
-        }
+    titulos = document.getElementsByClassName("titleForm");
+    for(i = 0; i < titulos.length; i++) {
+        titulos[i].classList.toggle("dark", !checked);
+    }
 
-        bcontent = document.getElementsByClassName("basicContent");
-        for(i = 0; i < bcontent.length; i++) {
-            bcontent[i].classList.add("dark");
-        }
+    subtitulos = document.getElementsByClassName("subtitleForm");
+    for(i = 0; i < subtitulos.length; i++) {
+        subtitulos[i].classList.toggle("dark", !checked);
+    }
+
+    gridsep = document.getElementsByClassName("grid-separator");
+    for(i = 0; i < gridsep.length; i++) {
+        gridsep[i].classList.toggle("dark", !checked);
+    }
+
+    celdas = document.getElementsByClassName("celda");
+    for(i = 0; i < celdas.length; i++) {
+        celdas[i].classList.toggle("dark", !checked);
+    }
+    
+    bcontent = document.getElementsByClassName("basicContent");
+    for(i = 0; i < bcontent.length; i++) {
+        bcontent[i].classList.toggle("dark", !checked);
     }
 }
 
