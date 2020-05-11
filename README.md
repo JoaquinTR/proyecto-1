@@ -12,6 +12,8 @@ Idea básica: http://www.passwordmeter.com/ .
 
 Testeo de brute force: https://github.com/ravisorg/Mellt/tree/master/javascript
 
+Generador de pdf: http://pdfmake.org
+
 
 ## Observaciones	
 

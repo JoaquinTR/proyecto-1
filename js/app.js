@@ -1,7 +1,7 @@
 
 /**
  * Función de inicialización de la página. Se encarga de setear las variables globales y de 
- * formatear el documento en base a la plataforma.
+ * formatear levemente el documento en base a la plataforma.
  */
 function init(){
     // -------- VARIABLES GLOBALES ---------
@@ -93,7 +93,7 @@ function init(){
         let mainContainer = document.getElementById("mainContainer");
         mainContainer.classList.add("adnroid-text");
     }
-    console.log("User agent: "+ userAgent + " android: "+android);
+    //console.log("User agent: "+ userAgent + " android: "+android);
 
     /*de ultima intentar usar .androidText:
     var htmlEl = document.getElementsByClassName('my-nice-class'); 
@@ -234,7 +234,7 @@ function togglePwd(){
 function check(pwd){
 
     /***** Parseo ******/
-
+    //variables auxiliares de cuentas
     let largoPwd = pwd.length;
     let cantLetrasMayus = 0;
     let cantLetrasMinus = 0;
@@ -251,7 +251,6 @@ function check(pwd){
     let secuenciaSimbolos = 0;
 
     //aux
-    let cantidadAnalizada = 0;
     let EntreChars = 0;                 //control de ocurrencia de números/símbolos entre caracteres.
     let lastTipo = 0;                   //control de último caracter : 0=> inicial ; 1=> minúscula ; 2=> mayúscula ; 3=> número ; 4=> símbolo.
     
@@ -373,7 +372,6 @@ function check(pwd){
         }
 
         last = c;
-        cantidadAnalizada ++;
 
         lastTipo = tipoActual;
         counts[c.toLowerCase()] = (counts[c.toLowerCase()] || 0) + 1    //agrego al objeto de cuenta de apariciones el caracter analizado.
@@ -484,7 +482,6 @@ function check(pwd){
     if(diferencial > largoPwd/2) deductRepeticiones /=2;
     deductRepeticiones = Math.round(deductRepeticiones);
 
-    console.log(cantidadRepeticiones, largoPwd, diferencial, deductRepeticiones);
     //deducciones al total
     total -= deductSoloLetras + deductSoloNum + deductMayusConsec + deductMinusConsec + deductNumsConsec + deductLetrasSec + deductNumerosSec + deductSimbolosSec + deductRepeticiones;
 
@@ -676,6 +673,7 @@ function generarPdf(){
         },
         content: [
             {text: 'PW-LIZER', style: 'header', link: 'https://joaquintr.github.io/proyecto-1/'},
+            {text: 'Reporte', style: 'subheader'},
             {
                 columns:[
                     {width:'*', text: 'Tiempo Bruteforce'},
@@ -787,14 +785,14 @@ function generarPdf(){
             subheader: {
                 fontSize: 16,
                 bold: true,
-                margin: [0, 10, 0, 5]
+                margin: [0, 20, 0, 5]
             },
             table: {
-                margin: [0, 5, 10, 15]
+                margin: [0, 10, 10, 15]
             }
         }
     };
 
-    // download the PDF
-    pdfMake.createPdf(docDefinition).download('pw-lizer-results.pdf');
+    // descarga del PDF
+    pdfMake.createPdf(docDefinition).download('pw-lizer-resultados.pdf');
 }
