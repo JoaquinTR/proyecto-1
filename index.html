@@ -14,11 +14,16 @@
   <body onload="init()">
     <div id="titleContainer">
       <div class="mode">
-        <input type="checkbox" id="checkTema" onclick="setTema(!checked)">
+        <input type="checkbox" id="checkTema" onclick="setTema(!checked)"
+        title="Intercambiar entre modo diurno y modo nocturno."
+        >
         <img id="modeIcon" src="css/images/dark.png"/>
+        <img onclick="generarPdf()" class="pdf" src="css/images/pdf.png" 
+        title="Generar un reporte en PDF."
+        />
       </div>
       <h1 class="tituloPagina">pw-lizer</h1>
-      <img onclick="generarPdf()" class="pdf" src="css/images/pdf.png"/>
+      
 
     </div>
 

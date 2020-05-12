@@ -10,7 +10,8 @@
     --color-dgrey:rgb(154, 156, 158);
     --color-lgreen: #66FCF1;
     --color-dgreen: #45A29E;
-    --color-title-green: #4CAF50;
+    --color-title-green: #17A2B8;
+    --color-subtitle: #FF8800;
 }
 
 div.sticky {
@@ -29,13 +30,6 @@ div.sticky {
     font-family: simplificasimplifica;
     font-weight: bold;
     font-size: 15px !important;
-}
-
-.pdf{
-    height: 50px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
 }
 
 #titleContainer{
@@ -57,7 +51,7 @@ div.sticky {
     margin-bottom: 0px;
     text-align: center;
     font-size: 50px;
-    font-family: simplificasimplifica; /*font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;*/
+    font-family: simplificasimplifica;
     text-transform: uppercase;
 }
 
@@ -117,7 +111,7 @@ body.dark{
 
 .subtitleForm{
     padding: 0.01em 16px;
-    background-color: var(--color-dgrey) !important;
+    background-color: var(--color-subtitle) !important;
 }
 .subtitleForm.dark{
     background-color: var(--color-subtitle-dark) !important;
@@ -136,12 +130,11 @@ body.dark{
 }
 
 meter {
-    /* Reset the default appearance */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
   
-    /* For Firefox */
+    /* Firefox */
     background: #EEE;
     box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
     border-radius: 3px;
@@ -211,10 +204,6 @@ div.container{
     display: inline-block;
 }
 
-.block{
-    display: block;
-}
-
 .center{
     text-align: center !important;
 }
@@ -244,6 +233,8 @@ div.container{
 #bloqueMetricas.dark{
     box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
 }
+
+/* Grilla de métricas */
 
 .grid-container{
     display: grid;
@@ -330,10 +321,6 @@ div.container{
     grid-column: 1/8;
 }
 
-#varios{
-    grid-column: 1/6;
-}
-
 .grid-double{
     grid-column: 6/8;
 }
@@ -376,16 +363,12 @@ div[value="excep"]{
     font-weight: bold;
 }
 
-/* .switch {
-    padding-left: 2%;
-    width: 5%;
-    height: 20px;
-    position: absolute;
-} */
+/* Selector de tema diurno/nocturno */
 
 .mode{
     width: 50px;
     height: 50px;
+    background-color: var(--color-blue);
     position: absolute;
 }
 .mode img{
@@ -408,7 +391,15 @@ div[value="excep"]{
     
 }
 
-/* mensaje de error al querer generar pdf con password vacío*/
+/* pdf y mensaje de error al querer generar pdf con password vacío*/
+.pdf{
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+    left: 50px;
+    top: 0px;
+}
+
 .alert {
     padding: 20px;
     background-color: #f44336;

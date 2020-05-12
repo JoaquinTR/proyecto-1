@@ -143,23 +143,30 @@ function _get(id){
 */
 function setTema(checked){
     let visible = document.getElementById("visibleCheck");  //el ícono de mostrar/esconder contraseña
+    let mode = document.getElementById("modeIcon"); //ícono de modo
 
     if(checked){
         if(visible.getAttribute("src") == "css/images/show-dark.png")
             visible.setAttribute("src","css/images/show.png");
         else if(visible.getAttribute("src") == "css/images/hide-dark.png")
             visible.setAttribute("src","css/images/hide.png");
+
+        mode.previousSibling.previousSibling.title = "Cambiar a modo nocturno."
     }
     else{
         if(visible.getAttribute("src") == "css/images/show.png")
             visible.setAttribute("src","css/images/show-dark.png");
         else
             visible.setAttribute("src","css/images/hide-dark.png");
+
+        mode.previousSibling.previousSibling.title = "Cambiar a modo diurno."
     }
 
     visible.classList.toggle("dark", !checked);
     
-    document.getElementById("modeIcon").setAttribute("src",(checked) ? "css/images/dark.png" : "css/images/bright.png"); //ícono de modo
+    //cambio el ícono de modo al correspondiente
+    mode.setAttribute("src",(checked) ? "css/images/dark.png" : "css/images/bright.png"); 
+    
     window.localStorage.setItem("tema",(checked) ? "white" : "black");
 
     //reacomodo los estilos
