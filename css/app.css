@@ -8,10 +8,12 @@
     --color-blue: #1F2833;
     --color-grey: #C5C6C7;
     --color-dgrey:rgb(154, 156, 158);
+    --color-red: #a30810;
     --color-lgreen: #66FCF1;
+    --color-green: #057207;
     --color-dgreen: #45A29E;
     --color-title-green: #17A2B8;
-    --color-subtitle: #FF8800;
+    --color-subtitle: #e08700;
 }
 
 div.sticky {
@@ -276,12 +278,14 @@ div.container{
 }
 
 .grid-separator{
-    background-color: var(--color-blue) !important;
-    color: var(--color-white);
+    background-color: var(--color-subtitle) !important;
+    color: var(--color-black);
+    border-bottom: solid 1px gray;
 }
 
 .grid-separator.dark{
     background-color: #1F1A24 !important;
+    color: var(--color-white);
 }
 
 .grid-title{
@@ -344,7 +348,7 @@ div[mellt="excep"]{
 }
 
 div[value="bad"]{
-    background-color: #c20000;
+    background-color: var(--color-red);
 }
 
 div[value="mild"]{
@@ -353,7 +357,7 @@ div[value="mild"]{
 }
 
 div[value="good"]{
-    background-color: #009b1a;
+    background-color: var(--color-green);
 }
 
 div[value="excep"]{
