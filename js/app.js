@@ -1,12 +1,12 @@
-//seteo de página estilo de página, está fuera del init para prevenir anomalías visuales.
+//seteo de estilo de página, está fuera del init para prevenir anomalías visuales.
 tema = window.localStorage.getItem("tema");
 if(!tema)
     window.localStorage.setItem("tema","white");
 else if(tema=="white"){
-    document.getElementById("checkTema").checked = false;
+    _get("checkTema").checked = false;
     setTema(true);
 }else{
-    document.getElementById("checkTema").checked = true;
+    _get("checkTema").checked = true;
     setTema(false);
 }
 
@@ -89,19 +89,18 @@ function init(){
     let android = userAgent.indexOf("android") > -1;
     if(android){            //fix en teléfonos
         document.body.style.zoom = screen.logicalXDPI / screen.deviceXDPI;
-        let mainContainer = document.getElementById("mainContainer");
+        let mainContainer = _get("mainContainer");
         mainContainer.classList.add("adnroid-text");
     }
-    //console.log("User agent: "+ userAgent + " android: "+android);
 
     //fix problema de transición al recargar la página, se disparaba siempre la transición, esto evita que suceda
-    document.getElementById("alert").classList.add("transition");
+    _get("alert").classList.add("transition");
     document.body.classList.add("transition");
-    document.getElementById("bloqueInfo").classList.add("transition");
-    document.getElementById("bloquePassword").classList.add("transition");
-    document.getElementById("bloqueMetricas").classList.add("transition");
-    document.getElementById("titleContainer").classList.add("transition");
-    document.getElementById("passwordPwd").classList.add("transition");
+    _get("bloqueInfo").classList.add("transition");
+    _get("bloquePassword").classList.add("transition");
+    _get("bloqueMetricas").classList.add("transition");
+    _get("titleContainer").classList.add("transition");
+    _get("passwordPwd").classList.add("transition");
 
     /*
      * Las variables de estos for ya están cargadas (en la función setTema), lo deje así para ahorrar tiempo de ejecución
@@ -129,7 +128,7 @@ function init(){
 }
 
 /** 
- * Wrapper de acceso al DOM por id 
+ * Wrapper de acceso al DOM por id, por comodidad.
  * @param {String}   id         Id del elemento del DOM.
  * @return {HTMLElement}        Elemento asociado al id pasado por parámetro.
 */
@@ -142,8 +141,8 @@ function _get(id){
  * @param {boolean}   checked         Valor actual del checkbox, true >> pasa a white, false >> pasa a dark.
 */
 function setTema(checked){
-    let visible = document.getElementById("visibleCheck");  //el ícono de mostrar/esconder contraseña
-    let mode = document.getElementById("modeIcon"); //ícono de modo
+    let visible = _get("visibleCheck");  //el ícono de mostrar/esconder contraseña
+    let mode = _get("modeIcon"); //ícono de modo
 
     if(checked){
         if(visible.getAttribute("src") == "css/images/show-dark.png")
@@ -171,11 +170,11 @@ function setTema(checked){
 
     //reacomodo los estilos
     document.body.classList.toggle("dark", !checked);
-    document.getElementById("bloqueInfo").classList.toggle("dark", !checked);
-    document.getElementById("bloquePassword").classList.toggle("dark", !checked);
-    document.getElementById("bloqueMetricas").classList.toggle("dark", !checked);
-    document.getElementById("titleContainer").classList.toggle("dark", !checked);
-    document.getElementById("passwordPwd").classList.toggle("dark", !checked);
+    _get("bloqueInfo").classList.toggle("dark", !checked);
+    _get("bloquePassword").classList.toggle("dark", !checked);
+    _get("bloqueMetricas").classList.toggle("dark", !checked);
+    _get("titleContainer").classList.toggle("dark", !checked);
+    _get("passwordPwd").classList.toggle("dark", !checked);
 
     titulos = document.getElementsByClassName("titleForm");
     for(i = 0; i < titulos.length; i++) {
@@ -336,7 +335,18 @@ function check(pwd){
                     caracteresEnSecuencia = -1;
 
             }
-            else
+            else if(caracteresEnSecuencia >= 1 ){  
+                switch(lastTipo){
+                    case 1:
+                    case 2:
+                        secuenciaLetras += caracteresEnSecuencia;
+                        break;
+                    case 4:
+                        secuenciaSimbolos += caracteresEnSecuencia;
+                        break;
+                }
+                caracteresEnSecuencia = - 1;
+            }else
                 caracteresEnSecuencia = - 1;
                 
             tipoActual = 3;
@@ -354,12 +364,23 @@ function check(pwd){
                 if (c.charCodeAt(0) == last.charCodeAt(0)+1)
                     caracteresEnSecuencia ++;
                 else if(caracteresEnSecuencia >= 1){
-                    secuenciaLetras += caracteresEnSecuencia;
+                    secuenciaSimbolos += caracteresEnSecuencia;
                     caracteresEnSecuencia = -1;
                 }else
                     caracteresEnSecuencia = -1;
             }
-            else
+            else if(caracteresEnSecuencia >= 1 ){  
+                switch(lastTipo){
+                    case 1:
+                    case 2:
+                        secuenciaLetras += caracteresEnSecuencia;
+                        break;
+                    case 3:
+                        secuenciaNumeros += caracteresEnSecuencia;
+                        break;
+                }
+                caracteresEnSecuencia = - 1;
+            } else
                 caracteresEnSecuencia = -1;
             
 
@@ -456,7 +477,6 @@ function check(pwd){
     
     //------- Cálculo de deducciones -------//
     //Calculo de valores de cantidad:
-    //repetidos: si la cantidad es menor que largo/2, n*2, sino n*3.
     let cantidadRepeticiones = 0;
     for (const letra in counts) {
         if(counts[letra]>1)
@@ -475,8 +495,11 @@ function check(pwd){
     let deductNumerosSec = secuenciaNumeros * 3;
     let deductSimbolosSec = secuenciaSimbolos * 3;
 
-    //caracteres repetidos, si la cantidad de caracteres repetidos supera la mitad de la contraseña
-    //entonces peno la seguridad multiplicando por dos el cálculo de deducción, caso contrario lo dejo como está
+    /*
+     * Si la cantidad de caracteres repetidos supera la mitad de la contraseña
+     * entonces peno la seguridad multiplicando por dos el cálculo de deducción, caso contrario deduce
+     * uno cada char repetido.
+    */
     let diferencial = largoPwd - cantidadRepeticiones;
     let deductRepeticiones = (cantidadRepeticiones) ? (largoPwd/((diferencial)+1))*2 : 0;
     if(diferencial > largoPwd/2) deductRepeticiones /=2;
@@ -486,6 +509,7 @@ function check(pwd){
     total -= deductSoloLetras + deductSoloNum + deductMayusConsec + deductMinusConsec + deductNumsConsec + deductLetrasSec + deductNumerosSec + deductSimbolosSec + deductRepeticiones;
 
     //------- Ajuste final de total -------//
+    //acomodo los límites
     if(total<0) total = 0;
     else if(total>100) total = 100;
 
@@ -494,6 +518,8 @@ function check(pwd){
         total = 0;
 
     /****** Impresión a usuario ******/
+
+    //instancio cada uno de los elementos HTML.
 
     //------- Adiciones -------//
     //---- Cantidad:
@@ -545,7 +571,6 @@ function check(pwd){
     //---- Cantidad:
     interfaz.sletrascant.innerHTML = sololetras;
     interfaz.snumeroscant.innerHTML = solonum;
-    interfaz.repetidoscant.innerHTML = 0;
     interfaz.mayusconscant.innerHTML = consecMayus;
     interfaz.minusconscant.innerHTML = consecMinus;
     interfaz.numconscant.innerHTML = consecNums;
@@ -566,7 +591,7 @@ function check(pwd){
 
 
     interfaz.repetidosdeduct.innerHTML = (deductRepeticiones) ? "- " + deductRepeticiones : 0;
-    if( (deductRepeticiones >= 2) && (deductRepeticiones < 12)  ) interfaz.repetidosdeduct.setAttribute("value","mild"); 
+    if( (deductRepeticiones >= 1) && (deductRepeticiones < 12)  ) interfaz.repetidosdeduct.setAttribute("value","mild"); 
     else if((deductRepeticiones >= 12)) interfaz.repetidosdeduct.setAttribute("value","bad"); 
     else interfaz.repetidosdeduct.setAttribute("value","good"); 
 
@@ -618,8 +643,9 @@ function check(pwd){
  * @param {boolean} valor   true ==> muestra la alerta, false ==> esconde la alerta. 
  */
 function toggleAlert(valor){
+    clearTimeout(timer);    //apaga el timer, evita que se cierre la antes alerta al apretar dos veces seguidas
     if(valor){
-        document.getElementById("alert").classList.remove("hidden");
+        _get("alert").classList.remove("hidden");
         interfaz.alert.children[0].classList.remove("hidden");
         timer = setTimeout(function(){
             interfaz.alert.classList.add("hidden");
@@ -657,7 +683,7 @@ function generarPdf(){
     else
         colorBruteforce = "blue"
 
-    let valorFinal = document.getElementById("meter").getAttribute("value");
+    let valorFinal = _get("meter").getAttribute("value");
     let colorValor;
     if(valorFinal < 25)
         colorValor = "red";
@@ -684,7 +710,7 @@ function generarPdf(){
             {
                 columns:[
                     {width:'*', text: 'Puntaje de seguridad'},
-                    {width:'*', text: document.getElementById("meter").getAttribute("value")+"/100", color: colorValor }
+                    {width:'*', text: _get("meter").getAttribute("value")+"/100", color: colorValor }
                 ],
                 columnGap: 10
             },

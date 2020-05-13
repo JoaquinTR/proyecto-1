@@ -29,7 +29,7 @@ var Mellt = function() {
 	 * Set this to null (and don't include common-passwords.js) to skip 
 	 * checking common passwords. 
 	 */
-	this.CommonPasswords = null;
+	this.CommonPasswords;
 
 	/**
 	 * @var array $CharacterSets An array of strings, each string containing a
@@ -49,7 +49,8 @@ var Mellt = function() {
 		// to contain passwords in Russian characters) add your characters to one of
 		// the sets below, or create new sets and insert them in the right places.
 		"0123456789",
-		"abcdefghijklmnopqrstuvwxyz",
+		"áéíóú",
+		"abcdefghijklmnñopqrstuvwxyz",
 		"abcdefghijklmnopqrstuvwxyz0123456789",
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",

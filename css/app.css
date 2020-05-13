@@ -2,7 +2,7 @@
 
 :root{
     --color-subtitle-dark: #00695f;
-    --color-white-extra: #f7f7f7;
+    --color-white-extra: #e4e4e4;
     --color-white: #e6e6e6;
     --color-black: #0B0C10;
     --color-blue: #1F2833;
@@ -80,6 +80,7 @@ body.dark{
 }
 #passwordPwd.dark{
     border-bottom: 2px solid var(--color-white);
+    color: var(--color-white) !important;
 }
 
 #bloquePassword{
@@ -101,11 +102,12 @@ body.dark{
 }
 
 .titleForm{
-    color: #fff !important;
+    color: var(--color-black) !important;
     background-color: var(--color-title-green) !important;
     padding: 0.01em 16px;
 }
 .titleForm.dark{
+    color: var(--color-white) !important;
     background-color: #102A43 !important;
 }
 
@@ -428,9 +430,9 @@ div[value="excep"]{
 .closebtn {
     color: var(--color-white);
     font-weight: bold;
-    float: right;
-    font-size: 30px;
-    line-height: 25px;
+    float: left;
+    font-size: 50px;
+    line-height: 28px;
     cursor: pointer;
     transition: 0.3s;
 }

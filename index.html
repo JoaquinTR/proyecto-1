@@ -12,6 +12,8 @@
     <title>pw-lizer</title>
   </head>
   <body onload="init()">
+
+    <!-- Barra Header -->
     <div id="titleContainer">
       <div class="mode">
         <input type="checkbox" id="checkTema" onclick="setTema(!checked)"
@@ -27,17 +29,19 @@
 
     </div>
 
+    <!-- Alerta PDF -->
     <div class="alert hidden" id="alert">
       <span class="closebtn" onclick="toggleAlert(false)">&times;</span> 
       <strong>Error:</strong> Ingresá una contraseña para generar el PDF.
     </div>
 
+    <!-- Contenedor principal -->
     <div id="mainContainer" class="texto">
       <form id="formPwd" name="formPwd">
 
         <div id="containerLeft">
 
-          <!-- Input -->
+          <!-- Bloque Input -->
           <div id="bloquePassword" class="sticky">
 
             <div class="titleForm">
@@ -79,7 +83,7 @@
   
           </div>
 
-          <!-- Grillas -->
+          <!-- Grillas de Métricas -->
           <div id="bloqueMetricas">
             <div class="titleForm">
               <h2>
@@ -95,7 +99,6 @@
               <div class="grid-separator grid-title">Cantidad</div>
               <div class="grid-separator">Bonus</div>
               
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Número de caracteres que conforman la contraseña ingresada"
               >Número de caracteres</div>
@@ -103,7 +106,6 @@
               <div class="grid-mid-mid center grid-separator" id="nchar-count">0</div>
               <div class="grid-right center white" id="nchar-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras mayúsculas que posee la contraseña."
               >Letras mayúsculas</div>
@@ -111,7 +113,6 @@
               <div class="grid-mid-mid center grid-separator" id="nletrasmayus-count">0</div>
               <div class="grid-right center white" id="nletrasmayus-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras minúsculas que posee la contraseña."
               >Letras minúsculas</div>
@@ -119,7 +120,6 @@
               <div class="grid-mid-mid center grid-separator" id="nletrasminus-count">0</div>
               <div class="grid-right center white" id="nletrasminus-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números que posee la contraseña."
               >números</div>
@@ -127,7 +127,6 @@
               <div class="grid-mid-mid center grid-separator" id="nnums-count">0</div>
               <div class="grid-right center white" id="nnums-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos que posee la contraseña. Se entiende como símbolo a todo aquel caracterque no es ni una letra, ni un número."
               >Símbolos</div>
@@ -135,7 +134,6 @@
               <div class="grid-mid-mid center grid-separator" id="nsimbolos-count">0</div>
               <div class="grid-right center white" id="nsimbolos-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números o símbolos que se encuentran entre otros caracteres, ejemplo: 'a1a', 'b!b' y '111'."
               >Números/símbolos entre caracteres</div>
@@ -143,7 +141,6 @@
               <div class="grid-mid-mid center grid-separator" id="nnumsentrechars-count">0</div>
               <div class="grid-right center white" id="nnumsentrechars-bonus" value="bad">0</div>
 
-              <!-- <div class="grid-bottom-left-corner">img2</div> -->
               <div class="celda descripcionMetrica zoom grid-bottom-mid"
               title="Cantidad de requerimientos cumplidos (ver sección Requerimientos Mínimos)."
               >Requerimientos</div>
@@ -154,7 +151,6 @@
               <!-- ***** deducciones ***** -->
               <div id="deductions" class="grid-separator grid-title">Deducciones</div>
               
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por letras."
               >Solo letras</div>
@@ -162,7 +158,6 @@
               <div class="grid-mid-mid center grid-separator" id="sololetras-count">0</div>
               <div class="grid-right center white" id="sololetras-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por números."
               >Solo números</div>
@@ -170,7 +165,6 @@
               <div class="grid-mid-mid center grid-separator" id="solonums-count">0</div>
               <div class="grid-right center white" id="solonums-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de caracteres repetidos que posee la contraseña. Es indiferente en cuanto a mayúsculas y minúsculas."
               >Caracteres repetidos</div>
@@ -178,7 +172,6 @@
               <div class="grid-mid-mid center grid-separator" id="repchars-count">0</div>
               <div class="grid-right center white" id="repchars-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de letras minúsculas consecutivas que posee la contraseña."
               >Letras mayúsculas consecutivas</div>
@@ -186,7 +179,6 @@
               <div class="grid-mid-mid center grid-separator" id="lmayusconsec-count">0</div>
               <div class="grid-right center white" id="lmayusconsec-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="cantidad de letras mayúsculas consecutivas que posee la contraseña."
               >Letras minúsculas consecutivas</div>
@@ -194,7 +186,6 @@
               <div class="grid-mid-mid center grid-separator"  id="lminusconsec-count">0</div>
               <div class="grid-right center white"  id="lminusconsec-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de números consecutivos que posee la contaseña."
               >Números consecutivos</div>
@@ -202,7 +193,6 @@
               <div class="grid-mid-mid center grid-separator" id="numsconsec-count">0</div>
               <div class="grid-right center white" id="numsconsec-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo 'abcde' son 5 letras en secuencia."
               >Letras en secuencia (3+)</div>
@@ -210,7 +200,6 @@
               <div class="grid-mid-mid center grid-separator" id="letrassecuencia-count">0</div>
               <div class="grid-right center white" id="letrassecuencia-deduct" value="good">0</div>
 
-              <!-- <div class="grid-left-side">img1</div> -->
               <div class="celda descripcionMetrica zoom grid-mid-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '12345' son 5 números en secuencia."
               >Números en secuencia (3+)</div>
@@ -218,7 +207,6 @@
               <div class="grid-mid-mid center grid-separator"  id="numssecuencia-count">0</div>
               <div class="grid-right center white"  id="numssecuencia-deduct" value="good">0</div>
 
-              <!-- <div class="grid-bottom-left-corner">img2</div> -->
               <div class="celda descripcionMetrica zoom grid-bottom-mid"
               title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '()*' son 3 símbolos en secuencia."
               >Símbolos en secuencia (3+)</div>
@@ -232,7 +220,7 @@
 
         </div>
 
-        <!-- Info -->
+        <!-- Bloque Info -->
         <div id="bloqueInfo" class="sticky">
             
           <div class="titleForm">
