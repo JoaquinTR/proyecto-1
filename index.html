@@ -57,7 +57,9 @@
                 </div>
                 <div>
                   <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
-                  <img id="visibleCheck" src="css/images/show.png" class="checkbox" onclick="togglePwd()"></img>
+                  <img id="visibleCheck" src="css/images/show.png" class="checkbox" onclick="togglePwd()"
+                  title="Mostrar contraseña."
+                  ></img>
                 </div>
               </div>  
   
@@ -291,12 +293,24 @@
 
         </div>
 
+        <!-- Resultados anteriores -->
+        <div id="bloqueResultados" class="texto sticky">
+          <div class="titleForm" onload="genList(this)">
+            <h2>
+              Resultados previos
+            </h2>
+          </div>
+          <!-- Slot de resultados -->
+          <div class="grid-container-resultados" id="resultados">
+            <div class="grid-separator grid-title res-left center">Resultado</div>
+            <div class="grid-separator grid-title center">Bruteforce</div>
+          </div>
+        </div>
+
       </form>
     </div>
 
-    <div id="footer" class="texto">
-
-    </div>
+    
     <!-- JavaScript -->
     <script src="js/Mellt/Mellt.js" ></script>
     <script src="js/Mellt/common-passwords.js"></script>

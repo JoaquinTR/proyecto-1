@@ -1,5 +1,29 @@
 //seteo de estilo de página, está fuera del init para prevenir anomalías visuales.
 tema = window.localStorage.getItem("tema");
+resultadosPrevios = window.localStorage.getItem("prevs");   //lista de previos
+
+if(!resultadosPrevios){ //inicializador
+    let p = {
+        '0':'',
+        '1':'',
+        '2':'',
+        '3':'',
+        '4':'',
+        'next': 0
+    }
+    window.localStorage.setItem("prevs",JSON.stringify(p));
+}
+
+//evento listener de cierre o refresco de navegador, lo uso para guardar los resultados
+window.addEventListener("beforeunload", function(e){
+    if( (interfaz.pwdElem.value.length >=8) && (interfaz.reqscant.innerHTML>=4) ){  //solo sumo si paso los requerimientos mínimos
+        setRes();
+    }
+}, false);
+
+//disparo el relleno de la lista de resultados previos
+genList();
+
 if(!tema)
     window.localStorage.setItem("tema","white");
 else if(tema=="white"){
@@ -99,6 +123,7 @@ function init(){
     _get("bloqueInfo").classList.add("transition");
     _get("bloquePassword").classList.add("transition");
     _get("bloqueMetricas").classList.add("transition");
+    _get("bloqueResultados").classList.add("transition");
     _get("titleContainer").classList.add("transition");
     _get("passwordPwd").classList.add("transition");
 
@@ -150,7 +175,7 @@ function setTema(checked){
         else if(visible.getAttribute("src") == "css/images/hide-dark.png")
             visible.setAttribute("src","css/images/hide.png");
 
-        mode.previousSibling.previousSibling.title = "Cambiar a modo nocturno."
+        mode.previousSibling.previousSibling.title = "Cambiar a modo nocturno.";
     }
     else{
         if(visible.getAttribute("src") == "css/images/show.png")
@@ -158,7 +183,7 @@ function setTema(checked){
         else
             visible.setAttribute("src","css/images/hide-dark.png");
 
-        mode.previousSibling.previousSibling.title = "Cambiar a modo diurno."
+        mode.previousSibling.previousSibling.title = "Cambiar a modo diurno.";
     }
 
     visible.classList.toggle("dark", !checked);
@@ -173,6 +198,7 @@ function setTema(checked){
     _get("bloqueInfo").classList.toggle("dark", !checked);
     _get("bloquePassword").classList.toggle("dark", !checked);
     _get("bloqueMetricas").classList.toggle("dark", !checked);
+    _get("bloqueResultados").classList.toggle("dark", !checked);
     _get("titleContainer").classList.toggle("dark", !checked);
     _get("passwordPwd").classList.toggle("dark", !checked);
 
@@ -207,16 +233,18 @@ function setTema(checked){
  * Intercambia la visibilidad del campo contraseña. Contempla el tema actual seleccionado.
 */
 function togglePwd(){
-    
+    //tema es una variable global definida en el principio de este archivo
     if (interfaz.pwdElem.type === 'text') {
         interfaz.pwdElem.type = 'password';
-        (window.localStorage.getItem("tema")=="white") ? interfaz.visibilidad.setAttribute("src","css/images/show.png")
+        (tema =="white") ? interfaz.visibilidad.setAttribute("src","css/images/show.png")
             : interfaz.visibilidad.setAttribute("src","css/images/show-dark.png");
+        interfaz.visibilidad.title = "Mostrar contraseña."
     }
     else{
         interfaz.pwdElem.type = 'text';
-        (window.localStorage.getItem("tema")=="white") ? interfaz.visibilidad.setAttribute("src","css/images/hide.png")
-            : interfaz.visibilidad.setAttribute("src","css/images/hide-dark.png")
+        (tema =="white") ? interfaz.visibilidad.setAttribute("src","css/images/hide.png")
+            : interfaz.visibilidad.setAttribute("src","css/images/hide-dark.png");
+        interfaz.visibilidad.title = "Esconder contraseña."
     }
     
 }
@@ -665,6 +693,8 @@ function toggleAlert(valor){
 
 /**
  * Genera un archivo PDF utilizando los datos calculados en la página.
+ * La librería es simple, toma una plantilla de documento y en base a eso genera un documento PDF.
+ * Utilizando la llamada download fuerzo la descarga del documento.
  */
 function generarPdf(){
     if(interfaz.pwdElem.value == ""){   //si no tengo nada cargado en la contraseña lanzo la alerta
@@ -821,4 +851,80 @@ function generarPdf(){
 
     // descarga del PDF
     pdfMake.createPdf(docDefinition).download('pw-lizer-resultados.pdf');
+    setRes();
+}
+
+//***** Lista de últimos valores *****/
+
+/**
+ * Para resolver esto guardo un objeto con 6 elementos, 5 slots de datos'0' ... '4' que van a contener una lista de 
+ * dos entradas, un número (puntaje) y un string (correspondiente al tiempo de bruteforce obtenido), además tiene 
+ * una entrada 'next' que indica el próximo slot libre.
+ * Cuando el usuario sale o recarga la página fuerza que se guarden esos datos en una entrada libre del objeto 
+ * (dentro del local storage, como "prev") pero además suma 1 a next, en caso de estar lleno pisa la última entrada
+ * almacenada ('0') y no mueve next.
+ * Finalmente getList() lee este objeto y crea dinámicamente los elementos del DOM.
+ */
+
+/**
+ * Guarda los resultados actuales en la lista de resultados para mostrar a futuro.
+ */
+function setRes(){
+    let resultados = JSON.parse(window.localStorage.getItem("prevs"));
+    let prox = resultados['next'];
+    if(prox == 5){  //si es 5 tengo que pisar el 0 (el valor mas antiguo)
+        resultados['0']=resultados['1'];
+        resultados['1']=resultados['2'];
+        resultados['2']=resultados['3'];
+        resultados['3']=resultados['4'];
+        resultados[prox-1] = [interfaz.meter.value,interfaz.bruteforceElem.innerHTML];
+    }
+    else
+        resultados['next'] = prox + 1;
+        resultados[prox] = [interfaz.meter.value,interfaz.bruteforceElem.innerHTML];
+
+    //en el proximo lugar, si se llenaron todos, es siempre el '4' (último cargado) y se pisa el '0' (primero cargado)
+    window.localStorage.setItem("prevs", JSON.stringify(resultados));
+    console.log("resultados ",resultados);
+}
+
+/**
+ * Genera dinámicamente los elementos DOM de la lista de resultados previos.
+ */
+function genList(){
+    let resultados = JSON.parse(window.localStorage.getItem("prevs"));
+    console.log(resultados);
+
+    let padre = _get("resultados");
+    let tope = resultados.next;
+    
+    if(tope != '0'){
+        //obtengo valores, creo div, seteo clase, seteo innerHTML, seteo colores y agrego los elementos al padre
+        for(i = tope-1; i >= 0; i--) {
+            console.log("rep ",resultados[i]);
+            let lval = resultados[i][0];
+            let rval = resultados[i][1];
+
+            let left = document.createElement('div');
+            let right = document.createElement('div');
+
+            left.classList.add("celda","res-left", "center");
+            right.classList.add("celda", "center");
+            left.innerHTML = lval;
+            right.innerHTML = rval;
+
+            let color;
+            if(lval < 25)
+                color = "bad";
+            else if(lval < 75)
+                color = "mild";
+            else 
+                color = "good";
+
+            left.setAttribute("mellt", color);
+
+            padre.appendChild(left);
+            padre.appendChild(right);
+        }
+    }
 }

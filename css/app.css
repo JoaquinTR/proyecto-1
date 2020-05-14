@@ -227,6 +227,17 @@ div.container{
     box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
 }
 
+#bloqueResultados{
+    margin: 0.01em 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    float: right;
+}
+#bloqueResultados.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
+
 #bloqueMetricas{
     margin: 0.01em 16px;
     margin-top: 10px;
@@ -332,19 +343,19 @@ div.container{
 }
 
 div[mellt="bad"]{
-    color: #ff0000;
+    color: #ff0000 !important;
 }
 
 div[mellt="mild"]{
-    color: #9e9b00;
+    color: #9e9b00 !important;
 }
 
 div[mellt="good"]{
-    color: green;
+    color: green !important;
 }
 
 div[mellt="excep"]{
-    color: rgb(0, 0, 202);
+    color: rgb(0, 0, 202) !important;
 }
 
 div[value="bad"]{
@@ -447,4 +458,22 @@ div[value="excep"]{
   
 .closebtn:hover {
     color: black;
+}
+
+/* Grilla de resultados, tiene otras medidas */
+.grid-container-resultados{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.grid-container-resultados >div{
+    text-align: left;
+    padding: 5px;
+    display: block;
+    transition: transform .2s;
+    border-bottom: solid 1px gray;
+    border-right: none;
+}
+
+.res-left{
+    border-right: solid 1px gray !important;
 }
