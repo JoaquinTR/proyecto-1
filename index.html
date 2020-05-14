@@ -2,17 +2,320 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="description" content="Analizador de seguridad de contraseñas">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- CSS -->
     <link rel="stylesheet" href="css/app.css">
+    <link rel="shortcut icon" type="image/png" href="css/images/favicon.png">
 
-    <title>Proyecto 1</title>
+    <title>pw-lizer</title>
   </head>
-  <body>
-    <h1>Proyecto 1</h1>
+  <body onload="init()">
 
+    <!-- Barra Header -->
+    <div id="titleContainer">
+      <div class="mode">
+        <input type="checkbox" id="checkTema" onclick="setTema(!checked)"
+        title="Intercambiar entre modo diurno y modo nocturno."
+        >
+        <img id="modeIcon" src="css/images/dark.png"/>
+        <img onclick="generarPdf()" class="pdf" src="css/images/pdf.png" 
+        title="Generar un reporte en PDF."
+        />
+      </div>
+      <h1 class="tituloPagina">pw-lizer</h1>
+      
+
+    </div>
+
+    <!-- Alerta PDF -->
+    <div class="alert hidden" id="alert">
+      <span class="closebtn" onclick="toggleAlert(false)">&times;</span> 
+      <strong>Error:</strong> Ingresá una contraseña para generar el PDF.
+    </div>
+
+    <!-- Contenedor principal -->
+    <div id="mainContainer" class="texto">
+      <form id="formPwd" name="formPwd">
+
+        <div id="containerLeft">
+
+          <!-- Bloque Input -->
+          <div id="bloquePassword" class="sticky">
+
+            <div class="titleForm">
+              <h2>
+                Input
+              </h2>
+            </div>
+  
+            <div class="celda" title="Este campo corresponde a la contraseña a ser analizada. Ver sección Requerimientos mínimos.">
+              <div class="container inline">
+                <div>
+                  <label>Contraseña</label>
+                </div>
+                <div>
+                  <input type="password" id="passwordPwd" name="passwordPwd" autocomplete="off" onkeyup="check(this.value);"/>
+                  <img id="visibleCheck" src="css/images/show.png" class="checkbox" onclick="togglePwd()"
+                  title="Mostrar contraseña."
+                  ></img>
+                </div>
+              </div>  
+  
+              <div class="container inline" title="porcentaje de cumplimiento de requerimientos.">
+                <div>
+                  <label>Seguridad</label>
+                </div>
+                <div class="center" >
+                  <meter min="0" max="100" none="0" low="25" high="75" optimum="100" value="0" id="meter"></meter>
+                </div>
+              </div>
+  
+              <div class="container inline" title="Tiempo que toma encontrar esta contraseña utilizando la estrategia de fuerza bruta, es decir, probar una por una todas las combinaciones posibles utilizando una lógica mínima.">
+                <div>
+                  <label>Tiempo Bruteforce</label>
+                </div>
+                <div class="center" mellt="bad" id="dyToCrack">
+                  0 días
+                </div>
+              </div>
+  
+            </div>
+  
+          </div>
+
+          <!-- Grillas de Métricas -->
+          <div id="bloqueMetricas">
+            <div class="titleForm">
+              <h2>
+                Métricas
+              </h2>
+            </div>
+
+            <div class="grid-container">
+
+              <!-- ***** adiciones ***** -->
+              <div id="additions" class="grid-separator grid-title">Adición</div>
+              <div class="grid-separator grid-title">Ratio</div>
+              <div class="grid-separator grid-title">Cantidad</div>
+              <div class="grid-separator">Bonus</div>
+              
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Número de caracteres que conforman la contraseña ingresada"
+              >Número de caracteres</div>
+              <div class="celda grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid center grid-separator" id="nchar-count">0</div>
+              <div class="grid-right center white" id="nchar-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de letras mayúsculas que posee la contraseña."
+              >Letras mayúsculas</div>
+              <div class="celda grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="nletrasmayus-count">0</div>
+              <div class="grid-right center white" id="nletrasmayus-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de letras minúsculas que posee la contraseña."
+              >Letras minúsculas</div>
+              <div class="celda grid-mid-mid">+((largo - n)*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="nletrasminus-count">0</div>
+              <div class="grid-right center white" id="nletrasminus-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de números que posee la contraseña."
+              >números</div>
+              <div class="celda grid-mid-mid">+(n*4)</div>
+              <div class="grid-mid-mid center grid-separator" id="nnums-count">0</div>
+              <div class="grid-right center white" id="nnums-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de símbolos que posee la contraseña. Se entiende como símbolo a todo aquel caracterque no es ni una letra, ni un número."
+              >Símbolos</div>
+              <div class="celda grid-mid-mid">+(n*6)</div>
+              <div class="grid-mid-mid center grid-separator" id="nsimbolos-count">0</div>
+              <div class="grid-right center white" id="nsimbolos-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de números o símbolos que se encuentran entre otros caracteres, ejemplo: 'a1a', 'b!b' y '111'."
+              >Números/símbolos entre caracteres</div>
+              <div class="celda grid-mid-mid">+(n*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="nnumsentrechars-count">0</div>
+              <div class="grid-right center white" id="nnumsentrechars-bonus" value="bad">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-bottom-mid"
+              title="Cantidad de requerimientos cumplidos (ver sección Requerimientos Mínimos)."
+              >Requerimientos</div>
+              <div class="celda grid-bottom-mid">+(n*2)</div>
+              <div class="grid-bottom-mid center grid-separator" id="reqs-count">0</div>
+              <div class="center grid-bottom-right-corner white" id="reqs-bonus" value="bad">0</div>
+
+              <!-- ***** deducciones ***** -->
+              <div id="deductions" class="grid-separator grid-title">Deducciones</div>
+              
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por letras."
+              >Solo letras</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="sololetras-count">0</div>
+              <div class="grid-right center white" id="sololetras-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de caracteres, en caso de que la contraseña esté completamente compuesta por números."
+              >Solo números</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="solonums-count">0</div>
+              <div class="grid-right center white" id="solonums-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de caracteres repetidos que posee la contraseña. Es indiferente en cuanto a mayúsculas y minúsculas."
+              >Caracteres repetidos</div>
+              <div class="celda grid-mid-mid">Compuesto</div>
+              <div class="grid-mid-mid center grid-separator" id="repchars-count">0</div>
+              <div class="grid-right center white" id="repchars-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de letras minúsculas consecutivas que posee la contraseña."
+              >Letras mayúsculas consecutivas</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="lmayusconsec-count">0</div>
+              <div class="grid-right center white" id="lmayusconsec-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="cantidad de letras mayúsculas consecutivas que posee la contraseña."
+              >Letras minúsculas consecutivas</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
+              <div class="grid-mid-mid center grid-separator"  id="lminusconsec-count">0</div>
+              <div class="grid-right center white"  id="lminusconsec-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de números consecutivos que posee la contaseña."
+              >Números consecutivos</div>
+              <div class="celda grid-mid-mid">-(n*2)</div>
+              <div class="grid-mid-mid center grid-separator" id="numsconsec-count">0</div>
+              <div class="grid-right center white" id="numsconsec-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo 'abcde' son 5 letras en secuencia."
+              >Letras en secuencia (3+)</div>
+              <div class="celda grid-mid-mid">-(n*3)</div>
+              <div class="grid-mid-mid center grid-separator" id="letrassecuencia-count">0</div>
+              <div class="grid-right center white" id="letrassecuencia-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-mid-mid"
+              title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '12345' son 5 números en secuencia."
+              >Números en secuencia (3+)</div>
+              <div class="celda grid-mid-mid">-(n*3)</div>
+              <div class="grid-mid-mid center grid-separator"  id="numssecuencia-count">0</div>
+              <div class="grid-right center white"  id="numssecuencia-deduct" value="good">0</div>
+
+              <div class="celda descripcionMetrica zoom grid-bottom-mid"
+              title="Cantidad de símbolos en secuencia que posee la contraseña contando a partir de 3, ejemplo '()*' son 3 símbolos en secuencia."
+              >Símbolos en secuencia (3+)</div>
+              <div class="celda grid-bottom-mid">-(n*3)</div>
+              <div class="grid-bottom-mid center grid-separator" id="simbolossecuencia-count">0</div>
+              <div class="center grid-bottom-right-corner white" id="simbolossecuencia-deduct" value="good">0</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Bloque Info -->
+        <div id="bloqueInfo" class="sticky">
+            
+          <div class="titleForm">
+            <h2>
+              Información
+            </h2>
+          </div>
+
+          <div class="subtitleForm">
+            <h3>
+              Requerimientos mínimos
+            </h3>
+          </div>
+
+          <div class="basicContent">
+            <ul>
+              <li>
+                Contiene al menos 8 caracteres
+              </li>
+              <li>
+                Contiene al menos 3 de de 4 de los siguientes ítems:
+                <br>
+                -Letras minúsculas
+                <br>
+                -Letras mayúsculas
+                <br>
+                -Símbolos
+                <br>
+                -Números
+              </li>
+            </ul>
+          </div>
+
+          <div class="subtitleForm">
+            <h3>
+              Información General
+            </h3>
+          </div>
+          <div class="basicContent">
+            <ul>
+              <li>
+                Ratio:
+                <br>
+                - n : Corresponde al valor "Cantidad" en dicha fila.
+                <br>
+                - largo : Largo total de la contraseña.
+                <br>
+                - Compuesto : Depende de diversos factores.
+              </li>
+              <li>
+                El medidor "nivel" es un reflejo del puntaje final.
+              </li>
+              <li>
+                El puntaje final comprende un número entre 0 y 100.
+              </li>
+              <li>
+                El puntaje se ve nullificado ante una contraseña <br>
+                obvia, por ejemplo, la contraseña "asdasd" o "0123" <br>
+                son demasiado inseguras. Se muestra un mensaje <br>
+                en "Tiempo Bruteforce".
+              </li>
+              <li>
+                Para mas información mantener el cursor en las <br>
+                descripciones de cada adición o deducción.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Resultados anteriores -->
+        <div id="bloqueResultados" class="texto sticky">
+          <div class="titleForm" onload="genList(this)">
+            <h2>
+              Resultados previos
+            </h2>
+          </div>
+          <!-- Slot de resultados -->
+          <div class="grid-container-resultados" id="resultados">
+            <div class="grid-separator grid-title res-left center">Resultado</div>
+            <div class="grid-separator grid-title center">Bruteforce</div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    
     <!-- JavaScript -->
-    <script src="js/app.js"></script>
+    <script src="js/Mellt/Mellt.js" ></script>
+    <script src="js/Mellt/common-passwords.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/vfs_fonts.js"></script>
+    <script src="js/app.js" ></script>
   </body>
 </html>

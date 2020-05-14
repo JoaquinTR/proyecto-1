@@ -1,0 +1,479 @@
+@import url(fonts/simplifica/stylesheet.css);
+
+:root{
+    --color-subtitle-dark: #00695f;
+    --color-white-extra: #e4e4e4;
+    --color-white: #e6e6e6;
+    --color-black: #0B0C10;
+    --color-blue: #1F2833;
+    --color-grey: #C5C6C7;
+    --color-dgrey:rgb(154, 156, 158);
+    --color-red: #a30810;
+    --color-lgreen: #66FCF1;
+    --color-green: #057207;
+    --color-dgreen: #45A29E;
+    --color-title-green: #17A2B8;
+    --color-subtitle: #e08700;
+}
+
+div.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 1.5%;
+}
+
+.texto{
+    font-family: simplificasimplifica;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.texto.android-text{
+    font-family: simplificasimplifica;
+    font-weight: bold;
+    font-size: 15px !important;
+}
+
+#titleContainer{
+    -webkit-box-shadow: 0px -1px 22px 0px #000000; 
+    box-shadow: 0px -1px 22px 0px #000000;
+    width: 100%;
+    border-top: none;
+    background-color: var(--color-blue);
+    border-bottom: 2px solid var(--color-dgreen);
+    color: var(--color-lgreen);
+}
+#titleContainer.dark{
+    -webkit-box-shadow: 0px -1px 22px 0px rgba(255, 255, 255, 0.19) !important; 
+    box-shadow: 0px -1px 22px 0px rgba(255, 255, 255, 0.19) !important;
+}
+
+.tituloPagina{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-size: 50px;
+    font-family: simplificasimplifica;
+    text-transform: uppercase;
+}
+
+body{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    height: 100%;
+    background-color: var(--color-white-extra);
+}
+
+body.dark{
+    background-color: #121212 !important;
+}
+
+#mainContainer{
+    background: transparent;
+    display: flex;
+    justify-content: center;
+}
+
+#passwordPwd{
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-black);
+}
+#passwordPwd.dark{
+    border-bottom: 2px solid var(--color-white);
+    color: var(--color-white) !important;
+}
+
+#bloquePassword{
+    margin: 0.01em 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    float: left;
+    z-index: 1;
+}
+#bloquePassword.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
+
+.checkbox{
+    height: 25px;
+    width: 25px;
+    float: right;
+}
+
+.titleForm{
+    color: var(--color-black) !important;
+    background-color: var(--color-title-green) !important;
+    padding: 0.01em 16px;
+}
+.titleForm.dark{
+    color: var(--color-white) !important;
+    background-color: #102A43 !important;
+}
+
+.subtitleForm{
+    padding: 0.01em 16px;
+    background-color: var(--color-subtitle) !important;
+}
+.subtitleForm.dark{
+    background-color: var(--color-subtitle-dark) !important;
+    color: var(--color-white) !important;
+}
+
+.basicContent{
+    background-color: var(--color-grey);
+    font-size: 20px;
+    padding: 5px;
+    padding-left: 0px;
+}
+.basicContent.dark{
+    background-color: rgb(59, 68, 77);
+    color: var(--color-white);
+}
+
+meter {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  
+    /* Firefox */
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+    border: solid var(--color-black) 1px;
+}
+  
+  /* WebKit */
+meter::-webkit-meter-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+  
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value {
+    border-radius: 3px;
+}
+  
+meter::-webkit-meter-optimum-value {
+    background: #86CC00;
+}
+  
+meter::-webkit-meter-suboptimum-value {
+    background: #FFDB1A;
+}
+  
+meter::-webkit-meter-even-less-good-value  {
+    background: #CC4600;
+}
+  
+  
+/* Firefox */
+meter::-moz-meter-bar {
+    border-radius: 3px;
+}
+  
+meter:-moz-meter-optimum::-moz-meter-bar {
+    background: #86CC00;
+}
+  
+meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: #FFDB1A;
+}
+  
+meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: #CC4600;
+}
+
+ul{
+    margin: 0px;
+}
+
+h2{
+    margin: 10px 0;
+}
+
+h3{
+    margin: 10px 0;
+}
+
+div.container{
+    padding: 10px;
+}
+
+.inline{
+    display: inline-block;
+}
+
+.center{
+    text-align: center !important;
+}
+
+#containerLeft{
+    display: inline-grid;
+}
+
+#bloqueInfo{
+    margin: 0.01em 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    float: left;
+}
+#bloqueInfo.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
+
+#bloqueResultados{
+    margin: 0.01em 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    float: right;
+}
+#bloqueResultados.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
+
+#bloqueMetricas{
+    margin: 0.01em 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    float: left;
+}
+#bloqueMetricas.dark{
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.2),0 4px 20px 0 rgba(255, 255, 255, 0.19) !important;
+}
+
+/* Grilla de métricas */
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 10% 15% 15% auto auto auto;
+}
+
+.descripcionMetrica{
+    grid-column: 1/5;
+}
+
+.grid-container > div{
+    text-align: left;
+    padding: 5px;
+    display: block;
+    transition: transform .2s;
+}
+
+.celda{
+    background-color: var(--color-grey);
+}
+.celda.dark{
+    background-color: rgb(59, 68, 77);
+    color: var(--color-white);
+}
+
+.zoom{
+    transition: transform .2s;
+    z-index: 0;
+}
+
+.zoom:hover{
+    transform: scale(1.02);
+}
+
+#additions{
+    grid-column: 1/5;
+}
+
+.grid-separator{
+    background-color: var(--color-subtitle) !important;
+    color: var(--color-black);
+    border-bottom: solid 1px gray;
+}
+
+.grid-separator.dark{
+    background-color: #1F1A24 !important;
+    color: var(--color-white);
+}
+
+.grid-title{
+    border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
+}
+
+.grid-bottom-left-corner{
+    border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
+}
+
+.grid-left-side{
+    border-bottom: solid 1px grey;
+    border-right: solid 1px grey;
+}
+
+.grid-mid-mid{
+    border-left: solid 1px grey;
+    border-right: solid 1px grey;
+    border-bottom: solid 1px grey;
+}
+
+.grid-bottom-mid{
+    border-right: solid 1px grey;
+    border-bottom: solid 1px gray;
+    border-left: solid 1px grey;
+}
+
+.grid-right{
+    border-bottom: solid 1px grey;
+}
+
+.grid-bottom-right-corner{
+    border-bottom: solid 1px gray;
+}
+
+#deductions{
+    grid-column: 1/8;
+}
+
+.grid-double{
+    grid-column: 6/8;
+}
+
+div[mellt="bad"]{
+    color: #ff0000 !important;
+}
+
+div[mellt="mild"]{
+    color: #9e9b00 !important;
+}
+
+div[mellt="good"]{
+    color: green !important;
+}
+
+div[mellt="excep"]{
+    color: rgb(0, 0, 202) !important;
+}
+
+div[value="bad"]{
+    background-color: var(--color-red);
+}
+
+div[value="mild"]{
+    background-color: #f3bc08;
+    color: grey;
+}
+
+div[value="good"]{
+    background-color: var(--color-green);
+}
+
+div[value="excep"]{
+    background-color: #003980;
+}
+
+.white{
+    color: var(--color-white);
+    font-weight: bold;
+}
+
+/* Selector de tema diurno/nocturno */
+
+.mode{
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-blue);
+    position: absolute;
+}
+.mode img{
+    width: 50%;
+    height: 50%;
+    padding:25%;
+}
+
+.mode input {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+    z-index: 100;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    margin: 25%;
+    cursor: pointer;
+    
+}
+
+/* pdf y mensaje de error al querer generar pdf con password vacío*/
+.pdf{
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+    left: 50px;
+    top: 0px;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: var(--color-white);
+    border-radius: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    text-align: center;
+    font-family: simplificasimplifica;
+    font-size: 25px;
+    position: absolute;
+    float: left;
+    left: 5%;
+    right: 5%;
+    z-index: 100;
+}
+.alert.hidden{
+    opacity: 0;
+}
+
+.transition {
+    transition: 0.3s;
+}
+  
+.closebtn {
+    color: var(--color-white);
+    font-weight: bold;
+    float: left;
+    font-size: 50px;
+    line-height: 28px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn.hidden{
+    display: none;
+}
+  
+.closebtn:hover {
+    color: black;
+}
+
+/* Grilla de resultados, tiene otras medidas */
+.grid-container-resultados{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.grid-container-resultados >div{
+    text-align: left;
+    padding: 5px;
+    display: block;
+    transition: transform .2s;
+    border-bottom: solid 1px gray;
+    border-right: none;
+}
+
+.res-left{
+    border-right: solid 1px gray !important;
+}
